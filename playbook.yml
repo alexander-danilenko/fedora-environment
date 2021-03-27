@@ -209,27 +209,43 @@
         - php
         - composer
 
-    - name: 'Create "~/.composer" directory'
+    - name: 'Create "~/.composer" directories'
       when: php.install|bool
       file:
-        path: '$HOME/.composer'
+        path: '{{ item }}'
         state: 'directory'
+      with_items:
+        - '$HOME/.composer'
+        - '$HOME/.composer/global'
       tags:
         - php
         - composer
 
     - name: 'Install "cgr/consolidation" global package'
-      when: php.composer.global is defined
+      when: php.install|bool and php.composer.global is defined
       shell: '. $HOME/.profile && composer global require consolidation/cgr'
       args:
         executable: '/bin/bash'
+        creates: '$HOME/.composer/vendor/bin/cgr'
+      tags:
+        - php
+        - composer
+
+    - name: 'List composer global packages installed'
+      when: php.install|bool and php.composer.global is defined
+      shell: 'tree ~/.composer/global -d -f -L 2'
+      register: composer_global_packages
       tags:
         - php
         - composer
 
     - name: 'Install global packages using "cgr"'
-      when: php.install|bool and php.composer.global is defined
-      shell: '. $HOME/.profile && cgr {{ php.composer.global | join(" ") }}'
+      when: |
+        php.install|bool
+        and php.composer.global is defined
+        and composer_global_packages.stdout.find(item) == -1
+      loop: '{{ php.composer.global }}'
+      shell: '. $HOME/.profile && cgr {{ item }}'
       args:
         executable: '/bin/bash'
       tags:
