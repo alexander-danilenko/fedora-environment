@@ -101,7 +101,10 @@ node:
       - eslint-config-standard
       - eslint-plugin-import
       - eslint-plugin-jsx-a11y
+      - eslint-plugin-node
+      - eslint-plugin-promise
       - eslint-plugin-react
+      - eslint-plugin-react-hooks
       - firebase-tools
       - flow
       - flow-bin
