@@ -295,9 +295,23 @@
         - node
         - nvm
 
+    - name: 'List installed global packages'
+      shell: '. $HOME/.profile && npm list --global --depth=0'
+      args:
+        executable: '/bin/bash'
+      register: npm_global_packages
+      ignore_errors: yes
+      tags:
+        - node
+        - nvm
+
     - name: 'Install global npm packages'
-      when: node.install|bool and node.npm.global is defined
-      shell: '. $HOME/.profile && npm install -g {{ node.npm.global | join(" ") }}'
+      when: |
+        node.install|bool
+        and node.npm.global is defined
+        and npm_global_packages.stdout.find(item) == -1
+      loop: '{{ node.npm.global }}'
+      shell: '. $HOME/.profile && npm install --global {{ item }}'
       args:
         executable: '/bin/bash'
       tags:
