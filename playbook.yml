@@ -34,11 +34,13 @@
       synchronize:
         src: './home'
         dest: '~'
+      register: home_dir_copied
       tags:
         - home
 
     - name: 'Reset fonts cache'
       become: no
+      when: home_dir_copied.changed
       shell: 'fc-cache -f -v'
       args:
         executable: '/bin/bash'
