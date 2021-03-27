@@ -268,8 +268,16 @@
         - node
         - nvm
 
-    - name: 'Install node versions'
+    - name: 'List node versions installed'
       when: node.install|bool
+      shell: '. $HOME/.profile && nvm ls --no-alias --no-colors'
+      register: node_versions_installed
+      tags:
+        - node
+        - nvm
+
+    - name: 'Install node versions'
+      when: node.install|bool and node_versions_installed.stdout.find('v{{ item }}') == -1
       loop: '{{ node.versions }}'
       shell: '. $HOME/.profile && nvm install {{ item }}'
       args:
