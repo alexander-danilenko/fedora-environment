@@ -53,6 +53,8 @@ apps:
     - telegram-desktop
     - vlc
 
+    - mediawriter # Fedora Media Writer (ISO to USB Flash)
+
     ### Fonts
     - dejavu-fonts-all
     - google-roboto-condensed-fonts
