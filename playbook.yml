@@ -32,11 +32,23 @@
 
     ############ Copy "./dotfiles" directory #######################################
 
-    - name: 'Copy "./dotfiles" directory to $HOME'
+    - name: 'Copy "./dotfiles" contents to user's home directory'
       synchronize:
-        src: './dotfiles'
+        src: './dotfiles/'
         dest: '~'
+        recursive: yes
+        compress: no
       register: home_dir_copied
+      tags:
+        - home
+        
+    - name: 'Create home directories'
+      file:
+        state: directory
+        path: '{{ item }}'
+      with_items:
+        - '~/.local/bin'
+
       tags:
         - home
 
@@ -54,7 +66,7 @@
     - name: 'Copy ".profile" and ".zshrc" to home directory'
       copy:
         src: '{{ item }}'
-        dest: '$HOME'
+        dest: '~'
         backup: no
       with_items:
         - './dotfiles/.profile'
@@ -74,7 +86,7 @@
 
     - name: 'Create ~/.antigen directory'
       file:
-        path: '$HOME/.antigen'
+        path: '~/.antigen'
         state: 'directory'
       tags:
         - shell
@@ -84,7 +96,7 @@
     - name: 'Download Antigen'
       get_url:
         url: 'https://git.io/antigen'
-        dest: '$HOME/.antigen/antigen.zsh'
+        dest: '~/.antigen/antigen.zsh'
       tags:
         - shell
         - zsh
@@ -146,6 +158,8 @@
       dnf:
         name: '{{ apps.dnf }}'
         state: present
+        disable_gpg_check: yes
+        update_cache: yes
       tags:
         - software
         - apt
@@ -207,7 +221,7 @@
       when: php.install|bool
       get_url:
         url: 'https://getcomposer.org/composer-stable.phar'
-        dest: '$HOME/.local/bin/composer'
+        dest: '~/.local/bin/composer'
         mode: '0755'
       tags:
         - php
@@ -219,18 +233,18 @@
         path: '{{ item }}'
         state: 'directory'
       with_items:
-        - '$HOME/.composer'
-        - '$HOME/.composer/global'
+        - '~/.composer'
+        - '~/.composer/global'
       tags:
         - php
         - composer
 
     - name: 'Install "cgr/consolidation" global package'
       when: php.install|bool and php.composer.global is defined
-      shell: '. $HOME/.profile && composer global require consolidation/cgr'
+      shell: '. ~/.profile && composer global require consolidation/cgr'
       args:
         executable: '/bin/bash'
-        creates: '$HOME/.composer/vendor/bin/cgr'
+        creates: '~/.composer/vendor/bin/cgr'
       tags:
         - php
         - composer
@@ -249,7 +263,7 @@
         and php.composer.global is defined
         and composer_global_packages.stdout.find(item) == -1
       loop: '{{ php.composer.global }}'
-      shell: '. $HOME/.profile && cgr {{ item }}'
+      shell: '. ~/.profile && cgr {{ item }}'
       args:
         executable: '/bin/bash'
       tags:
@@ -261,6 +275,7 @@
       synchronize:
         src: '{{ item }}'
         dest: '~/.composer/global/squizlabs/php_codesniffer/vendor/squizlabs/php_codesniffer/src/Standards'
+        recursive: yes
       with_items:
         - '~/.composer/global/drupal/coder/vendor/drupal/coder/coder_sniffer/Drupal'
         - '~/.composer/global/drupal/coder/vendor/drupal/coder/coder_sniffer/DrupalPractice'
@@ -292,8 +307,9 @@
 
     - name: 'List node versions installed'
       when: node.install|bool
-      shell: '. $HOME/.profile && nvm ls --no-alias --no-colors'
+      shell: '. ~/.profile && nvm ls --no-alias --no-colors'
       register: node_versions_installed
+      ignore_errors: yes
       tags:
         - node
         - nvm
@@ -301,7 +317,7 @@
     - name: 'Install node versions'
       when: node.install|bool and node_versions_installed.stdout.find('v{{ item }}') == -1
       loop: '{{ node.versions }}'
-      shell: '. $HOME/.profile && nvm install {{ item }}'
+      shell: '. ~/.profile && nvm install {{ item }}'
       args:
         executable: '/bin/bash'
       tags:
@@ -310,7 +326,7 @@
 
     - name: 'Set default node version'
       when: node.install|bool
-      shell: '. $HOME/.profile && nvm alias default {{ node.defaultVersion | default("node") }}'
+      shell: '. ~/.profile && nvm alias default {{ node.defaultVersion | default("node") }}'
       args:
         executable: '/bin/bash'
       tags:
@@ -318,7 +334,7 @@
         - nvm
 
     - name: 'List installed global packages'
-      shell: '. $HOME/.profile && npm list --global --depth=0'
+      shell: '. ~/.profile && npm list --global --depth=0'
       args:
         executable: '/bin/bash'
       register: npm_global_packages
@@ -333,7 +349,7 @@
         and node.npm.global is defined
         and npm_global_packages.stdout.find(item) == -1
       loop: '{{ node.npm.global }}'
-      shell: '. $HOME/.profile && npm install --global {{ item }}'
+      shell: '. ~/.profile && npm install --global {{ item }}'
       args:
         executable: '/bin/bash'
       tags:
@@ -378,7 +394,7 @@
       when: vscode.install|bool
       copy:
         src: './dotfiles/.config/Code/User/settings.json'
-        dest: '$HOME/.config/Code/User/settings.json'
+        dest: '~/.config/Code/User/settings.json'
         backup: no
       tags:
         - vscode
