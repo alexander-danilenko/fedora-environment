@@ -121,12 +121,19 @@
         - dnf
         - repos
   
-    - name: 'Install RPM-fusion'
+    - name: 'Install rpmfusion'
       become: yes
       shell: |
         dnf install -y \
           https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
           https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+      args:
+        creates: '/etc/yum.repos.d/rpmfusion-*'
+      tags:
+        - software
+        - dnf
+        - repos
+        - rpmfusion
 
     - name: 'Install dnf packages'
       when: apps.dnf is defined
@@ -288,7 +295,7 @@
         - nvm
         - npm
 
-#     ############ Install python and pip3 packages ##############################
+    ############ Install python and pip3 packages ##############################
 
     - name: 'Install Python dnf packages'
       when: python.install|bool
