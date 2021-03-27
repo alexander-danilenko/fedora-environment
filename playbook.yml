@@ -32,7 +32,7 @@
 
     ############ Copy "./dotfiles" directory #######################################
 
-    - name: 'Copy "./dotfiles" contents to user's home directory'
+    - name: 'Copy "./dotfiles" contents to user home directory'
       synchronize:
         src: './dotfiles/'
         dest: '~'
