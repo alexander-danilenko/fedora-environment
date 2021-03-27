@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+###> Install dependencies.
+[ ! $(command -v ffmpeg) ] && sudo apt install -y ffmpeg
+[ ! $(command -v ffmpeg-bar) ] && npm install --global ffmpeg-progressbar-cli
+###< Install dependencies.
+
+inputFiles="*.*"
+outputDirectory="./converted"
+
+videoCodec="h264"       # "h264", "h264_nvenc", "libx264"
+videoContainer="mkv"    # "mp4", "mkv"
+videoTune="film"        # "film", "animation", "stillimage"
+audioCodec="libvorbis"  # "aac", "libmp3lame", "libvorbis"
+audioBitrate="192k"     # "aac", "libmp3lame", "libvorbis"
+audioSampleRate="48000" # Audio sampling rate (in Hz)
+
+###> Progress-bar settings.
+export BAR_SIZE_RATIO=0.8
+export BAR_FILENAME_LENGTH=32
+###< Progress-bar settings.
+
+mkdir -p "$outputDirectory"
+for inputFile in $inputFiles; do
+  ffmpeg-bar -y -i "$inputFile" -c:v ${videoCodec} -preset slow -tune ${videoTune} -c:a ${audioCodec} -b:a ${audioBitrate} -ar ${audioSampleRate} -af loudnorm=I=-23:LRA=7:tp=-2 "${outputDirectory}/${inputFile%.*} [${videoCodec}].${videoContainer}";
+done

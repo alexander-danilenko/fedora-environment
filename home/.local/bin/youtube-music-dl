@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+###> Install dependencies.
+[ ! $(command -v youtube-dl) ] && pip3 install youtube-dl
+[ ! $(command -v AtomicParsley) ] && sudo apt install -y -qq atomicparsley
+###< Install dependencies.
+
+###> Colors
+BLACK=`tput setaf 0;`
+MAGENTA=`tput setaf 5;`
+RED=`tput setaf 1;`
+CYAN=`tput setaf 6;`
+GREEN=`tput setaf 2;`
+LIGHTGREY=`tput setaf 7;`
+YELLOW=`tput setaf 3;`
+BLUE=`tput setaf 4;`
+RESET=`tput sgr0`
+###< Colors
+
+cookiesFile="$HOME/.keys/youtube.com_cookies.txt"
+if [ ! -f "$cookiesFile" ]; then
+  echo -e "${RED}ERROR: No cookies file: ${YELLOW}${cookiesFile}${RESET}"
+  echo -e "See instructions in documentation: https://github.com/ytdl-org/youtube-dl/#how-do-i-pass-cookies-to-youtube-dl"
+  echo -e "- ${YELLOW}Google Chrome plugin${RESET}: https://chrome.google.com/webstore/detail/get-cookiestxt/bgaddhkoddajcdgocldbbfleckgcbcid"
+  echo -e "- ${YELLOW}Firefox plugin${RESET}: https://addons.mozilla.org/en-US/firefox/addon/cookies-txt"
+  exit 1
+fi
+
+youtube-dl --cookies "$cookiesFile" -f bestaudio --extract-audio --embed-thumbnail --add-metadata --audio-format m4a --output="%(release_year)s - %(playlist)s/%(playlist_index)s. %(artist)s - %(title)s.%(ext)s" $@

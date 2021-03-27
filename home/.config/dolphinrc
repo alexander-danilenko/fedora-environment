@@ -1,0 +1,16 @@
+[CompactMode]
+FontWeight=50
+IconSize=22
+PreviewSize=22
+
+[DetailsMode]
+FontWeight=50
+IconSize=22
+PreviewSize=22
+
+[IconsMode]
+FontWeight=50
+IconSize=64
+
+[PlacesPanel]
+IconSize=22

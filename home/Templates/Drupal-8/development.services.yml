@@ -1,0 +1,15 @@
+# Local development services.
+
+parameters:
+  http.response.debug_cacheability_headers: true
+
+  # <Magic>
+  twig.config:
+    debug: true
+    auto_reload: true
+    cache: false
+  # </Magic>
+
+services:
+  cache.backend.null:
+    class: Drupal\Core\Cache\NullBackendFactory

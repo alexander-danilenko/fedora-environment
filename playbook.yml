@@ -1,0 +1,443 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  vars_files:
+    - ./config.yml
+
+  tasks:
+
+    ############ Extend fs.inotify.max_user_watches value ######################
+    # @see https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
+
+    - name: Extend echo fs.inotify.max_user_watches
+      become: yes
+      lineinfile:
+        path: /etc/sysctl.conf
+        regexp: '^fs.inotify.max_user_watches'
+        line: fs.inotify.max_user_watches = 524288
+      tags:
+        - shell
+        - inotify
+
+    - name: 'Read new values from /etc/sysctl.conf'
+      become: yes
+      shell: 'sysctl -p'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - shell
+        - inotify
+
+    ############ Copy "./home" directory #######################################
+
+    - name: 'Copy "./home" directory to $HOME'
+      synchronize:
+        src: './home'
+        dest: '~'
+      tags:
+        - home
+
+    - name: 'Reset fonts cache'
+      become: no
+      shell: 'fc-cache -f -v'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - home
+
+    ############ Install ZSH + Antigen #########################################
+
+    - name: 'Copy ".profile" and ".zshrc" to home directory'
+      copy:
+        src: '{{ item }}'
+        dest: '$HOME'
+        backup: no
+      with_items:
+        - './home/.profile'
+        - './home/.zshrc'
+      tags:
+        - shell
+        - zsh
+
+    - name: 'Install "zsh" package'
+      become: true
+      dnf:
+        name: 'zsh'
+      tags:
+        - shell
+        - zsh
+
+    - name: 'Create ~/.antigen directory'
+      file:
+        path: '$HOME/.antigen'
+        state: 'directory'
+      tags:
+        - shell
+        - zsh
+        - antigen
+
+    - name: 'Download Antigen'
+      get_url:
+        url: 'https://git.io/antigen'
+        dest: '$HOME/.antigen/antigen.zsh'
+      tags:
+        - shell
+        - zsh
+        - antigen
+
+    ############ Install software ##############################################
+
+    - name: 'Add RPM repo keys'
+      when: apps.repos is defined and item.value.gpg is defined
+      become: yes
+      loop: '{{ apps.repos | dict2items }}'
+      rpm_key:
+        state: present
+        key: '{{ item.value.gpg }}'
+      tags:
+        - software
+        - dnf
+        - repos
+
+    - name: 'Add RPM repos by URL'
+      when: apps.repos is defined and item.value.url is defined
+      become: yes
+      loop: '{{ apps.repos | dict2items }}'
+      shell: 'dnf config-manager --add-repo {{ item.value.url }}'
+      tags:
+        - software
+        - dnf
+        - repos
+
+    - name: 'Add RPM repos by content'
+      when: apps.repos is defined and item.value.repo is defined
+      become: yes
+      loop: '{{ apps.repos | dict2items }}'
+      copy:
+        dest: '/etc/yum.repos.d/{{ item.key }}.repo'
+        content: '{{ item.value.repo }}'
+      tags:
+        - software
+        - dnf
+        - repos
+  
+    - name: 'Install RPM-fusion'
+      become: yes
+      shell: |
+        dnf install -y \
+          https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+          https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+    - name: 'Install dnf packages'
+      when: apps.dnf is defined
+      become: yes
+      dnf:
+        name: '{{ apps.dnf }}'
+      tags:
+        - software
+        - apt
+
+    - name: 'Make sure flatpak is installed'
+      when: apps.flatpak is defined
+      become: yes
+      dnf:
+        name: flatpak
+      tags:
+        - software
+        - flatpak
+
+    - name: 'Make sure flathub repo is added'
+      become: yes
+      when: apps.flatpak is defined
+      shell: 'flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - software
+        - flatpak
+
+    - name: 'Install flatpak packages'
+      when: apps.flatpak is defined
+      loop: '{{ apps.flatpak }}'
+      flatpak:
+        name:  '{{ item }}'
+        state: present
+        remote: flathub
+      tags:
+        - software
+        - flatpak
+
+    ############ Install PHP + composer + global packages ######################
+
+    - name: 'Install PHP dnf packages'
+      when: php.install|bool
+      become: yes
+      dnf:
+        name:
+          - php-common
+          - php-cli
+          - php-curl
+          - php-gd
+          - php-json
+          - php-mbstring
+          - php-mysqli
+          - php-opcache
+          - php-pdo
+          - php-xml
+          - php-zip
+      tags:
+        - php
+
+    - name: 'Download "composer.phar"'
+      when: php.install|bool
+      get_url:
+        url: 'https://getcomposer.org/composer-stable.phar'
+        dest: '$HOME/.local/bin/composer'
+        mode: '0755'
+      tags:
+        - php
+        - composer
+
+    - name: 'Create "~/.composer" directory'
+      when: php.install|bool
+      file:
+        path: '$HOME/.composer'
+        state: 'directory'
+      tags:
+        - php
+        - composer
+
+    - name: 'Install "cgr/consolidation" global package'
+      when: php.composer.global is defined
+      shell: '. $HOME/.profile && composer global require consolidation/cgr'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - php
+        - composer
+
+    - name: 'Install global packages using "cgr"'
+      when: php.install|bool and php.composer.global is defined
+      shell: '. $HOME/.profile && cgr {{ php.composer.global | join(" ") }}'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - php
+        - composer
+
+    - name: 'Enable "Drupal" code sniffer standards'
+      when: php.install|bool and php.composer.global is defined and 'drupal/coder' in php.composer.global and 'squizlabs/php_codesniffer' in php.composer.global
+      synchronize:
+        src: '{{ item }}'
+        dest: '~/.composer/global/squizlabs/php_codesniffer/vendor/squizlabs/php_codesniffer/src/Standards'
+      with_items:
+        - '~/.composer/global/drupal/coder/vendor/drupal/coder/coder_sniffer/Drupal'
+        - '~/.composer/global/drupal/coder/vendor/drupal/coder/coder_sniffer/DrupalPractice'
+      tags:
+        - php
+        - composer
+        - drupal
+
+    ############ Install Node.js and npm packages ##############################
+
+    - name: 'Make sure "nodejs" dnf package is removed'
+      when: node.install|bool
+      become: yes
+      dnf:
+        name: 'nodejs'
+        state: 'absent'
+      tags:
+        - node
+
+    - name: 'Install node version manager'
+      when: node.install|bool
+      shell: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash'
+      args:
+        creates: '{{ ansible_env.HOME }}/.nvm/nvm.sh'
+        executable: '/bin/bash'
+      tags:
+        - node
+        - nvm
+
+    - name: 'Install node versions'
+      when: node.install|bool
+      loop: '{{ node.versions }}'
+      shell: '. $HOME/.profile && nvm install {{ item }}'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - node
+        - nvm
+
+    - name: 'Set default node version'
+      when: node.install|bool
+      shell: '. $HOME/.profile && nvm alias default {{ node.defaultVersion | default("node") }}'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - node
+        - nvm
+
+    - name: 'Install global npm packages'
+      when: node.install|bool and node.npm.global is defined
+      shell: '. $HOME/.profile && npm install -g {{ node.npm.global | join(" ") }}'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - node
+        - nvm
+        - npm
+
+#     ############ Install python and pip3 packages ##############################
+
+    - name: 'Install Python dnf packages'
+      when: python.install|bool
+      become: yes
+      dnf:
+        name:
+          - python3-pip
+          - python3-docs
+      tags:
+        - python
+
+    - name: 'Install Python global packages'
+      when: python.install|bool and python.pip3.global is defined
+      shell: 'pip3 install --user {{ python.pip3.global | join(" ") }}'
+      args:
+        executable: '/bin/bash'
+      tags:
+        - python
+        - pip3
+
+    ############ Install and configure vscode ##################################
+
+    - name: 'Install "code" dnf package'
+      when: vscode.install|bool
+      become: yes
+      dnf:
+        name: code
+      tags:
+        - vscode
+
+    - name: 'Copy "code" settings from ./home'
+      when: vscode.install|bool
+      copy:
+        src: './home/.config/Code/User/settings.json'
+        dest: '$HOME/.config/Code/User/settings.json'
+        backup: no
+      tags:
+        - vscode
+
+    - name: 'Install "code" extensions'
+      when: vscode.install|bool and vscode.extensions is defined
+      loop: '{{ vscode.extensions }}'
+      shell: 'code --install-extension {{ item }}'
+      # Assume that not all extensions available to download. Some extensions
+      # may be either removed or renamed.
+      ignore_errors: yes
+      args:
+        executable: '/bin/bash'
+      tags:
+        - vscode
+        - extensions
+
+    ############ Install JetBrains Toolbox #####################################
+
+    - name: 'Install JetBrains Toolbox'
+      when: jetbrains.toolbox.install is defined and jetbrains.toolbox.install|bool
+      become: yes
+      shell: 'curl -Ls https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | sudo bash'
+      args:
+        executable: '/bin/bash'
+        creates: /opt/jetbrains-toolbox/
+      tags:
+        - jetbrains-toolbox
+
+    ############ Docker ########################################################
+    
+    - name: 'Install docker dnf packages'
+      when: docker.install|bool
+      become: yes
+      dnf:
+        pkg:
+          - docker-ce
+          - docker-compose
+      tags:
+        - docker
+
+#     - name: 'Move docker directory to ~/.docker'
+#       become: yes
+#       copy:
+#         content: |
+#           {
+#             "graph": "/home/{{ ansible_facts.user_id }}/.docker"
+#           }
+#         dest: '/etc/docker/daemon.json'
+#         owner: '{{ ansible_facts.user_id }}'
+#         group : '{{ ansible_facts.user_id }}'
+#         mode: '755'
+#       tags:
+#         - docker
+
+    - name: 'Start "docker" service on boot'
+      when: docker.install|bool
+      become: yes
+      service:
+        name: 'docker'
+        enabled: yes
+      tags:
+        - docker
+
+    - name: 'Restart "docker" service'
+      when: docker.install|bool
+      become: yes
+      service:
+        name: 'docker'
+        state: 'restarted'
+      tags:
+        - docker
+
+    - name: 'Make sure current user added to "docker" group'
+      when: docker.install|bool
+      become: yes
+      user:
+        name: '{{ lookup("env", "USER") }}'
+        groups: [docker]
+        append: yes
+      tags:
+        - docker
+
+    - name: Reset connection to use "docker" user group
+      when: docker.install|bool
+      meta: reset_connection
+      tags:
+        - docker
+
+    ############ Docksal #######################################################
+
+    - name: 'Install Docksal'
+      when: docker.install|bool and docker.docksal.install|bool
+      shell: 'curl -o- https://get.docksal.io | bash'
+      environment:
+        DOCKSAL_CONFIRM_YES: 1 # Force answer "y" to all y/n Docksal questions.  
+      args:
+        executable: '/bin/bash'
+        creates: /usr/local/bin/fin
+      register: docksal_install_ran
+      tags:
+        - docker
+        - docksal
+
+    - name: 'Set docksal settings'
+      when: |
+        docker.install|bool
+        and docker.docksal.install|bool
+        and docker.docksal.settings is defined
+      loop: '{{ docker.docksal.settings | default({}) | dict2items }}'
+      lineinfile:
+        path: ~/.docksal/docksal.env
+        regexp: '^{{ item.key }}'
+        line: '{{ item.key }}={{ item.value }}'
+      tags:
+        - docker
+        - docksal

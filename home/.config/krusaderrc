@@ -1,0 +1,12 @@
+First Time=true
+
+[ListPanelButtons]
+Icons=true
+
+[Look&Feel]
+Back Button Visible=true
+Default Search Mode=2
+Forward Button Visible=true
+Home Button Visible=true
+Rename Selects Extension=false
+Single Instance Mode=true

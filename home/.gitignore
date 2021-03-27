@@ -1,0 +1,41 @@
+# Patch/diff artifacts.
+*.patch
+*.diff
+*.orig
+*.rej
+interdiff*.txt
+# emacs artifacts.
+*~
+\#*\#
+
+
+# VI swap file
+*.swp
+
+
+# Hidden files.
+.DS*
+.project
+
+
+# Windows links.
+*.lnk
+
+
+# Temporary files.
+tmp*
+
+
+# Excludes for installed Drupal site
+sites/*/files/
+sites/*/settings.php
+
+
+# Exclude IDE's project directory
+nbproject
+.idea
+
+# Exclude docksal files.
+.docksal/*-local.*
+docroot/vendor
+www/vendor
