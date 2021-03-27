@@ -30,11 +30,11 @@
         - shell
         - inotify
 
-    ############ Copy "./home" directory #######################################
+    ############ Copy "./dotfiles" directory #######################################
 
-    - name: 'Copy "./home" directory to $HOME'
+    - name: 'Copy "./dotfiles" directory to $HOME'
       synchronize:
-        src: './home'
+        src: './dotfiles'
         dest: '~'
       register: home_dir_copied
       tags:
@@ -57,8 +57,8 @@
         dest: '$HOME'
         backup: no
       with_items:
-        - './home/.profile'
-        - './home/.zshrc'
+        - './dotfiles/.profile'
+        - './dotfiles/.zshrc'
       tags:
         - shell
         - zsh
@@ -374,10 +374,10 @@
       tags:
         - vscode
 
-    - name: 'Copy "code" settings from ./home'
+    - name: 'Copy "code" settings from ./dotfiles'
       when: vscode.install|bool
       copy:
-        src: './home/.config/Code/User/settings.json'
+        src: './dotfiles/.config/Code/User/settings.json'
         dest: '$HOME/.config/Code/User/settings.json'
         backup: no
       tags:
