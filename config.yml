@@ -4,6 +4,10 @@ apps:
     docker-ce:
       url: https://download.docker.com/linux/fedora/docker-ce.repo
 
+    sublime:
+      url: https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
+      gpg: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+
     vscode:
       gpg: https://packages.microsoft.com/keys/microsoft.asc
       repo: |
@@ -16,14 +20,7 @@ apps:
 
   # List of dnf packages to install.
   dnf:
-    - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    - https://downloads.slack-edge.com/linux_releases/slack-4.14.0-0.1.fc21.x86_64.rpm
-    - https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
-    - https://zoom.us/client/latest/zoom_x86_64.rpm
-
-    - '@development-tools' # Build-essentials analog.
-    - golang
-
+    ###> System/CLI apps
     - exfat-utils # Utilities to create, check, label and dump exFAT file system 
     - grub-customizer # GUI for GRUB settings management
     - htop # Terminal system monitor
@@ -33,17 +30,27 @@ apps:
     - neofetch # Shows Linux System Information with Distribution Logo
     - net-tools # Base network tools
     - stacer # Cool CleanMyMac alternative
+    - cifs-utils # CIFS driver for NFS mounts
+    - traceroute # Traces the route taken by packets over an IPv4/IPv6 network
+    - tree # Displays an indented directory tree, in color
+    - mediawriter # Fedora Media Writer (ISO to USB Flash)
 
+    ###> Archive formats support
     - arj # arj archiver
     - lha # lzh unarchiver
     - unrar # rar unarchiver
 
+    ###> Office
     - libreoffice
     - libreoffice-langpack-uk
     - libreoffice-langpack-ru
     - libreoffice-help-uk
     - libreoffice-help-ru
 
+    ###> Media/Internet/Office
+    - https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
+    - https://zoom.us/client/latest/zoom_x86_64.rpm
+    - clementine
     - dia
     - evolution
     - evolution-ews
@@ -53,9 +60,21 @@ apps:
     - telegram-desktop
     - vlc
 
-    - mediawriter # Fedora Media Writer (ISO to USB Flash)
+    ###> Developer tools
+    - https://downloads.slack-edge.com/linux_releases/slack-4.14.0-0.1.fc21.x86_64.rpm
+    - https://fortinetweb.s3.amazonaws.com/forticlient/downloads/FortiClientFullVPNInstaller_6.4.3.0959_x86_64.rpm
+    - '@development-tools' # Build-essentials analog.
+    - golang
+    - sublime-merge
+    - sublime-text
 
-    ### Fonts
+    ###> Gnome-based distro packages.
+    # - gnome-tweaks
+    # - NetworkManager-openvpn
+    # - NetworkManager-openvpn-gnome
+
+    ###> Fonts
+    - https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm # Microsoft Fonts
     - dejavu-fonts-all
     - google-roboto-condensed-fonts
     - google-roboto-fonts
@@ -66,11 +85,14 @@ apps:
     - sorkintype-merriweather-fonts
     - sorkintype-merriweather-sans-fonts
     - typetogether-literata-fonts
-    - https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm # Microsoft Fonts
 
   flatpak:
     - com.getpostman.Postman # API debugging tool
     - com.github.johnfactotum.Foliate # eBook reader
+    - com.skype.Client # Skype messanger
+    - com.synology.SynologyDrive # Synology Drive Client
+    - com.viber.Viber # Viber messanger
+    - com.xnview.XnViewMP # Media viewer
     # - com.discordapp.Discord
     # - com.rafaelmardojai.Blanket # Listen to different sounds
     # - com.spotify.Client
