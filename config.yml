@@ -53,6 +53,19 @@ apps:
     - telegram-desktop
     - vlc
 
+    ### Fonts
+    - dejavu-fonts-all
+    - google-roboto-condensed-fonts
+    - google-roboto-fonts
+    - google-roboto-mono-fonts
+    - google-roboto-slab-fonts
+    - jetbrains-mono-fonts-all
+    - open-sans-fonts
+    - sorkintype-merriweather-fonts
+    - sorkintype-merriweather-sans-fonts
+    - typetogether-literata-fonts
+    - https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm # Microsoft Fonts
+
   flatpak:
     - com.getpostman.Postman # API debugging tool
     - com.github.johnfactotum.Foliate # eBook reader
