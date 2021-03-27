@@ -328,10 +328,18 @@
       tags:
         - vscode
 
-    - name: 'Install "code" extensions'
+    - name: 'List installed code extensions'
+      shell: code --list-extensions
+      register: code_extensions
+      tags:
+        - vscode
+        - extensions
+
+    - name: 'Install code extensions'
       when: vscode.install|bool and vscode.extensions is defined
       loop: '{{ vscode.extensions }}'
       shell: 'code --install-extension {{ item }}'
+      when: code_extensions.stdout.lower().find(item.lower()) == -1
       # Assume that not all extensions available to download. Some extensions
       # may be either removed or renamed.
       ignore_errors: yes
