@@ -9,18 +9,20 @@
     ############ Extend fs.inotify.max_user_watches value ######################
     # @see https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 
-    - name: Extend echo fs.inotify.max_user_watches
+    - name: Extend fs.inotify.max_user_watches
       become: yes
       lineinfile:
         path: /etc/sysctl.conf
         regexp: '^fs.inotify.max_user_watches'
         line: fs.inotify.max_user_watches = 524288
+      register: inotify
       tags:
         - shell
         - inotify
 
     - name: 'Read new values from /etc/sysctl.conf'
       become: yes
+      when: inotify.changed
       shell: 'sysctl -p'
       args:
         executable: '/bin/bash'
