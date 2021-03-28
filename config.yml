@@ -4,6 +4,16 @@ apps:
     docker-ce:
       url: https://download.docker.com/linux/fedora/docker-ce.repo
 
+    google-chrome:
+      gpg: https://dl.google.com/linux/linux_signing_key.pub
+      repo: |
+        [google-chrome]
+        name=google-chrome
+        baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+        gpgkey=https://dl.google.com/linux/linux_signing_key.pub
+        enabled=1
+        gpgcheck=1
+
     sublime:
       url: https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
       gpg: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
@@ -50,6 +60,10 @@ apps:
     ###> Media/Internet/Office
     - https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
     - https://zoom.us/client/latest/zoom_x86_64.rpm
+
+    - firefox
+    - google-chrome-stable
+
     - clementine
     - dia
     - evolution
