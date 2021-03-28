@@ -14,6 +14,17 @@ apps:
         enabled=1
         gpgcheck=1
 
+    google-cloud-sdk:
+      repo: |
+        [google-cloud-sdk]
+        name=Google Cloud SDK
+        baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
+        enabled=1
+        gpgcheck=1
+        repo_gpgcheck=1
+        gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+               https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
     sublime:
       url: https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
       gpg: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
@@ -79,6 +90,7 @@ apps:
     - https://fortinetweb.s3.amazonaws.com/forticlient/downloads/FortiClientFullVPNInstaller_6.4.3.0959_x86_64.rpm
     - '@development-tools' # Build-essentials analog.
     - golang
+    - google-cloud-sdk
     - sublime-merge
     - sublime-text
 
