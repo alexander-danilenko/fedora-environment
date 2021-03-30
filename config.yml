@@ -50,6 +50,7 @@ apps:
     - mc # Two panel terminal file manager
     - neofetch # Shows Linux System Information with Distribution Logo
     - net-tools # Base network tools
+    - openfortivpn # Corporate VPN open source alternative.
     - stacer # Cool CleanMyMac alternative
     - cifs-utils # CIFS driver for NFS mounts
     - traceroute # Traces the route taken by packets over an IPv4/IPv6 network
@@ -87,7 +88,6 @@ apps:
 
     ###> Developer tools
     - https://downloads.slack-edge.com/linux_releases/slack-4.14.0-0.1.fc21.x86_64.rpm
-    - https://fortinetweb.s3.amazonaws.com/forticlient/downloads/FortiClientFullVPNInstaller_6.4.3.0959_x86_64.rpm
     - '@development-tools' # Build-essentials analog.
     - golang
     - google-cloud-sdk
