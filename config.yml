@@ -25,6 +25,17 @@ apps:
         gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
                https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
+    kubernetes:
+      repo: |
+        [kubernetes]
+        name=Kubernetes
+        baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+        enabled=1
+        gpgcheck=1
+        repo_gpgcheck=1
+        gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+               https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
     sublime:
       url: https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
       gpg: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
@@ -138,7 +149,13 @@ docker:
       DOCKSAL_CONTAINER_HEALTHCHECK_INTERVAL: 1m # Throttle healthchecks for less syslog entries.
       DOCKSAL_DNS_DISABLED: 0 # Set 1 for disable docksal DNS container at all.
       DOCKSAL_DNS_UPSTREAM: 1.1.1.1 # Use CloudFlare DNS as its faster than google's DNS.
-
+kubernetes:
+  install: yes
+  packages:
+    - kubeadm
+    - kubectl
+    - kubelet
+    - https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
 php:
   install: yes
   # @TODO: Add composer version select: v1 or v2.
