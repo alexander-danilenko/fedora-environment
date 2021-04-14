@@ -434,6 +434,14 @@
 
     ############ Docker ########################################################
     
+    - name: 'Add docker repo'
+      when: 'apps.repos["docker-ce"] is defined'
+      become: yes
+      shell: 'dnf config-manager --add-repo {{ apps.repos["docker-ce"].url }}'
+      tags:
+        - docker
+        - repos
+
     - name: 'Install docker dnf packages'
       when: docker.install|bool
       become: yes
