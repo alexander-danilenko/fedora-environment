@@ -149,13 +149,16 @@ docker:
       DOCKSAL_CONTAINER_HEALTHCHECK_INTERVAL: 1m # Throttle healthchecks for less syslog entries.
       DOCKSAL_DNS_DISABLED: 0 # Set 1 for disable docksal DNS container at all.
       DOCKSAL_DNS_UPSTREAM: 1.1.1.1 # Use CloudFlare DNS as its faster than google's DNS.
-kubernetes:
-  install: yes
-  packages:
-    - kubeadm
-    - kubectl
-    - kubelet
-    - https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
+
+cloud:
+  kubernetes:
+    install: yes
+    packages:
+      - kubeadm
+      - kubectl
+      - kubelet
+      - https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
+
 php:
   install: yes
   # @TODO: Add composer version select: v1 or v2.
@@ -208,7 +211,6 @@ python:
   pip3:
     # List of global packages to install.
     global:
-      - awscli # AWS cli.
       - ffmpeg-normalize # Normalizes audio using ffmpeg.
       - yq # Takes YAML input and retrieves data by query.
       - rivalcfg # SteelSeries Rival mouses configuration tool.

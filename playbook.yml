@@ -543,11 +543,11 @@
         - k8s
 
     - name: 'Install kubernetes dnf packages'
-      when: kubernetes.install|bool
+      when: cloud.kubernetes.install|bool
       become: yes
       dnf:
         state: present
-        pkg: '{{ kubernetes.packages }}'
+        pkg: '{{ cloud.kubernetes.packages }}'
       tags:
         - kubernetes
         - k8s
