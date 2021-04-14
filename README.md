@@ -1,8 +1,10 @@
-<p style="text-align: center;">
+<p align="center">
   <img src="https://cdn.svgporn.com/logos/fedora.svg" width="128" />
 </p>
 
-# Fedora environment
+<h1 align="center">
+  Fedora environment
+</h1>
 
 This repo contains [Ansible](https://www.ansible.com/) script for fast and easy DevOps/Web Developer environment setup on [Fedora](https://getfedora.org/) and destributions based on it.
 
@@ -33,7 +35,7 @@ Following tools will be installed:
 
 ## Requirements
 
-<img src="https://cdn.svgporn.com/logos/fedora.svg" width="12" /> **Fedora 33**
+<img src="https://cdn.svgporn.com/logos/fedora.svg" height="12" /> **Fedora 33**
 
 **Fedora** here means [Fedora](https://getfedora.org/) itself and all its flavors.
 
