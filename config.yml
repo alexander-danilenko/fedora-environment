@@ -101,7 +101,6 @@ apps:
     - https://downloads.slack-edge.com/linux_releases/slack-4.14.0-0.1.fc21.x86_64.rpm
     - '@development-tools' # Build-essentials analog.
     - golang
-    - google-cloud-sdk
     - sublime-merge
     - sublime-text
 
@@ -152,6 +151,8 @@ docker:
 
 cloud:
   aws: # AWS CLI v2
+    install: yes
+  google-cloud-sdk:
     install: yes
   kubernetes:
     install: yes

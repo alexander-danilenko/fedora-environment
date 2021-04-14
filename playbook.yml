@@ -530,28 +530,6 @@
         - docker
         - docksal
 
-    ############ Kubernetes ####################################################
-
-    - name: 'Add kubernetes repo'
-      when: apps.repos.kubernetes is defined
-      become: yes
-      copy:
-        dest: '/etc/yum.repos.d/kubernetes.repo'
-        content: '{{ apps.repos.kubernetes.repo }}'
-      tags:
-        - kubernetes
-        - k8s
-
-    - name: 'Install kubernetes dnf packages'
-      when: cloud.kubernetes.install|bool
-      become: yes
-      dnf:
-        state: present
-        pkg: '{{ cloud.kubernetes.packages }}'
-      tags:
-        - kubernetes
-        - k8s
-
     ############ AWS CLI #######################################################
 
     - name: 'Download AWS CLI v2'
@@ -575,3 +553,45 @@
       register: aws_install
       tags:
         - aws
+
+    ############ Google Cloud SDK ##############################################
+
+    - name: 'Add Google Cloud SDK repo'
+      when: 'apps.repos["google-cloud-sdk"] is defined and cloud["google-cloud-sdk"].install|bool'
+      become: yes
+      copy:
+        dest: '/etc/yum.repos.d/google-cloud-sdk.repo'
+        content: '{{ apps.repos["google-cloud-sdk"].repo }}'
+      tags:
+        - google-cloud-sdk
+
+    - name: 'Install Google Cloud SDK dnf packages'
+      when: 'apps.repos["google-cloud-sdk"] is defined and cloud["google-cloud-sdk"].install|bool'
+      become: yes
+      dnf:
+        pkg: google-cloud-sdk
+      tags:
+        - google-cloud-sdk
+
+    ############ Kubernetes ####################################################
+
+    - name: 'Add kubernetes repo'
+      when: apps.repos.kubernetes is defined
+      become: yes
+      copy:
+        dest: '/etc/yum.repos.d/kubernetes.repo'
+        content: '{{ apps.repos.kubernetes.repo }}'
+      tags:
+        - kubernetes
+        - k8s
+
+    - name: 'Install kubernetes dnf packages'
+      when: cloud.kubernetes.install|bool
+      become: yes
+      dnf:
+        state: present
+        pkg: '{{ cloud.kubernetes.packages }}'
+      tags:
+        - kubernetes
+        - k8s
+
