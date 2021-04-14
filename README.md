@@ -37,7 +37,7 @@ Following tools will be installed:
 
 <img src="https://cdn.svgporn.com/logos/fedora.svg" height="12" /> **Fedora 33**
 
-**Fedora** here means [Fedora](https://getfedora.org/) itself and all its flavors.
+**Fedora** here means [Fedora Workstation](https://getfedora.org/workstation/) itself and all [Fedora spins](https://spins.fedoraproject.org/).
 
 - - -
 
