@@ -551,3 +551,27 @@
       tags:
         - kubernetes
         - k8s
+
+    ############ AWS CLI #######################################################
+
+    - name: 'Download AWS CLI v2'
+      when: cloud.aws.install|bool
+      unarchive:
+        src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: /tmp
+        remote_src: yes
+        creates: /tmp/aws
+        mode: 0755
+      tags:
+        - aws
+
+    - name: 'Install AWS CLI v2'
+      when: cloud.aws.install|bool
+      command:
+      args:
+        cmd: "/tmp/aws/install"
+        creates: /usr/local/bin/aws
+      become: true
+      register: aws_install
+      tags:
+        - aws

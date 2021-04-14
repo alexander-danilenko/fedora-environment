@@ -151,6 +151,8 @@ docker:
       DOCKSAL_DNS_UPSTREAM: 1.1.1.1 # Use CloudFlare DNS as its faster than google's DNS.
 
 cloud:
+  aws: # AWS CLI v2
+    install: yes
   kubernetes:
     install: yes
     packages:
