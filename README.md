@@ -1,6 +1,10 @@
-# Fedora dotfiles
+<p style="text-align: center;">
+  <img src="https://cdn.svgporn.com/logos/fedora.svg" width="128" />
+</p>
 
-This repo contains [Ansible](https://www.ansible.com/) script for fast and easy web developer environment setup on [Fedora](https://getfedora.org/) and destributions based on it.
+# Fedora environment
+
+This repo contains [Ansible](https://www.ansible.com/) script for fast and easy DevOps/Web Developer environment setup on [Fedora](https://getfedora.org/) and destributions based on it.
 
 ## TL;DR
 
@@ -22,14 +26,14 @@ Following tools will be installed:
 - **Visual Studio Code** with extensions and themes
 - **JetBrains Toolbox**
 - **Postman**
-- **Docker** + [**Docksal**](https://docksal.io/)
+- **Docker** + [**Docksal**](https://docksal.io/) + Kubernetes
 - **zsh** + [antigen](https://github.com/zsh-users/antigen) + [gorilla config](home/.zshrc)
 - CLI utilities and tools
 - Office, Media apps, Internet apps and many-many more (see [`config.yml`](config.yml) file).
 
 ## Requirements
 
-- **Fedora 33**
+<img src="https://cdn.svgporn.com/logos/fedora.svg" width="12" /> **Fedora 33**
 
 **Fedora** here means [Fedora](https://getfedora.org/) itself and all its flavors.
 
