@@ -237,7 +237,7 @@ vscode:
     - ms-azuretools.vscode-docker        # Docker support
     - ms-python.python                   # Python support
     - pkief.material-icon-theme          # Material Icon Theme
-    - TabNine.tabnine-vscode             # AI-assisted autocomplete
+    #- TabNine.tabnine-vscode            # AI-assisted autocomplete
     - tyriar.lorem-ipsum                 # Lorem Ipsum generator
     - william-voyek.vscode-nginx         # nginx.conf support
     - yzhang.markdown-all-in-one         # Markdown tools
@@ -249,7 +249,6 @@ vscode:
     - mariusschulz.yarn-lock-syntax     # yarn.lock syntax highlight
 
     # PHP/Drupal specific extensions
-    - bbeversdorf.drupal-check # Drupal: check for deprecations
     - ikappas.composer         # Composer support
     - ikappas.phpcs            # PHP CodeSniffer
 
