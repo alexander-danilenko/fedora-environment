@@ -223,6 +223,7 @@ vscode:
   install: yes
   # List of plugins to install.
   extensions:
+    - amazonwebservices.aws-toolkit-vscode # AWS toolkit
     - acarreiro.calculate                # Calculates inline math expr
     - christian-kohler.path-intellisense # File path autocomplete
     - coenraads.bracket-pair-colorizer   # Bracket Pair Colorizer
