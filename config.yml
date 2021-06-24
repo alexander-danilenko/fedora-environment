@@ -236,6 +236,7 @@ vscode:
     - mikestead.dotenv                   # .env support
     - ms-azuretools.vscode-docker        # Docker support
     - ms-python.python                   # Python support
+    - ms-vscode-remote.remote-ssh        # SSH support 
     - pkief.material-icon-theme          # Material Icon Theme
     #- TabNine.tabnine-vscode            # AI-assisted autocomplete
     - tyriar.lorem-ipsum                 # Lorem Ipsum generator
