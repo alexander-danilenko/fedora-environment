@@ -140,7 +140,6 @@ docker:
 
 php:
   install: yes
-  # @TODO: Add composer version select: v1 or v2.
   composer:
     # List of global composer packages to install.
     #
