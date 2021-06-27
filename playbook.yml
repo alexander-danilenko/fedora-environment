@@ -562,7 +562,15 @@
       become: yes
       copy:
         dest: '/etc/yum.repos.d/google-cloud-sdk.repo'
-        content: '{{ apps.repos["google-cloud-sdk"].repo }}'
+        content: |
+          [google-cloud-sdk]
+          name=Google Cloud SDK
+          baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
+          enabled=1
+          gpgcheck=1
+          repo_gpgcheck=1
+          gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+                https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
       tags:
         - google-cloud-sdk
 
@@ -570,7 +578,8 @@
       when: 'apps.repos["google-cloud-sdk"] is defined and cloud["google-cloud-sdk"].install|bool'
       become: yes
       dnf:
-        pkg: google-cloud-sdk
+        update_cache: yes
+        pkg: '{{ cloud["google-cloud-sdk"].packages }}'
       tags:
         - google-cloud-sdk
 

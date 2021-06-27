@@ -14,17 +14,6 @@ apps:
         enabled=1
         gpgcheck=1
 
-    google-cloud-sdk:
-      repo: |
-        [google-cloud-sdk]
-        name=Google Cloud SDK
-        baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
-        enabled=1
-        gpgcheck=1
-        repo_gpgcheck=1
-        gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
-               https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-
     kubernetes:
       repo: |
         [kubernetes]
@@ -149,19 +138,6 @@ docker:
       DOCKSAL_DNS_DISABLED: 0 # Set 1 for disable docksal DNS container at all.
       DOCKSAL_DNS_UPSTREAM: 1.1.1.1 # Use CloudFlare DNS as its faster than google's DNS.
 
-cloud:
-  aws: # AWS CLI v2
-    install: yes
-  google-cloud-sdk:
-    install: yes
-  kubernetes:
-    install: yes
-    packages:
-      - kubeadm
-      - kubectl
-      - kubelet
-      - https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
-
 php:
   install: yes
   # @TODO: Add composer version select: v1 or v2.
@@ -257,3 +233,20 @@ vscode:
 jetbrains:
   toolbox:
     install: yes
+
+cloud:
+  aws: # AWS CLI v2
+    install: yes
+  google-cloud-sdk:
+    install: yes
+    packages:
+      - google-cloud-sdk
+      - google-cloud-sdk-minikube
+      - google-cloud-sdk-firestore-emulator
+
+  kubernetes:
+    install: yes
+    packages:
+      - kubeadm
+      - kubectl
+      - kubelet
