@@ -35,7 +35,7 @@ Following tools will be installed:
 
 ## Requirements
 
-<img src="https://cdn.svgporn.com/logos/fedora.svg" height="12" /> **Fedora 33**
+<img src="https://cdn.svgporn.com/logos/fedora.svg" height="12" /> **Fedora 34**
 
 **Fedora** here means [Fedora Workstation](https://getfedora.org/workstation/) itself and all [Fedora spins](https://spins.fedoraproject.org/).
 
