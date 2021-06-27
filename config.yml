@@ -75,6 +75,7 @@ apps:
     - golang
     - sublime-merge
     - sublime-text
+    - zeal # Offline documentation viewer
 
     ###> Gnome-based distro packages.
     # - gnome-tweaks
