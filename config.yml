@@ -105,12 +105,12 @@ apps:
     - com.getpostman.Postman # API debugging tool
     - com.github.johnfactotum.Foliate # eBook reader
     - com.skype.Client # Skype messanger
-    - com.synology.SynologyDrive # Synology Drive Client
     - com.viber.Viber # Viber messanger
     - com.xnview.XnViewMP # Media viewer
     # - com.discordapp.Discord
     # - com.rafaelmardojai.Blanket # Listen to different sounds
     # - com.spotify.Client
+    # - com.synology.SynologyDrive # Synology Drive Client
 
 docker:
   install: yes
