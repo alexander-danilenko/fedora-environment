@@ -18,14 +18,19 @@ Setting up a new developer machine can be an ad-hoc, manual, and time-consuming 
 
 Following tools will be installed:
 
-- **Node** (via [nvm](https://github.com/nvm-sh/nvm)) with global **npm** packages
-- **PHP** + **Composer** with global packages
-- **Python** + **PIP** with global packages
-- **Visual Studio Code** with extensions and themes
-- **JetBrains Toolbox**
-- **Postman**
-- **Docker** + [**Docksal**](https://docksal.io/) + Kubernetes
-- **zsh** + [antigen](https://github.com/zsh-users/antigen) + [gorilla config](home/.zshrc)
+- <img src="https://cdn.svgporn.com/logos/nodejs-icon.svg" height="14"> **Node.JS** (via [node version manager](https://github.com/nvm-sh/nvm)) + global **npm** packages
+- <img src="https://cdn.svgporn.com/logos/php.svg" height="14"> **PHP** +  <img src="https://cdn.svgporn.com/logos/composer.svg" height="14"> **Composer** + global packages
+- <img src="https://cdn.svgporn.com/logos/python.svg" height="14"> **Python** + **PIP** + global packages
+- <img src="https://cdn.svgporn.com/logos/visual-studio-code.svg" height="14"> **Visual Studio Code** + extensions and themes
+- <img src="https://cdn.svgporn.com/logos/jetbrains.svg" height="14"> **JetBrains Toolbox**
+- <img src="https://cdn.svgporn.com/logos/postman.svg" height="14"> **Postman**
+- <img src="https://cdn.svgporn.com/logos/docker-icon.svg" height="14"> **Docker** + <img src="https://d33wubrfki0l68.cloudfront.net/96d4dedb7aa3fbf371d01d3356a97ec463b23e04/ca713/images/docksal-mark-color.svg" height="14"> [**Docksal**](https://docksal.io/)
+- Cloud tools:
+  - <img src="https://cdn.svgporn.com/logos/kubernetes.svg" height="14"> **Kubernetes** + Minikube
+  - <img src="https://cdn.svgporn.com/logos/google-cloud.svg" height="14"> **Google Cloud SDK**
+  - <img src="https://cdn.svgporn.com/logos/aws.svg" height="14"> **AWS CLI v2**
+
+- **zsh** + [antigen](https://github.com/zsh-users/antigen)
 - CLI utilities and tools
 - Office, Media apps, Internet apps and many-many more (see [`config.yml`](config.yml) file).
 
