@@ -29,16 +29,6 @@ apps:
       url: https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
       gpg: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
 
-    vscode:
-      gpg: https://packages.microsoft.com/keys/microsoft.asc
-      repo: |
-        [code]
-        name=Visual Studio Code
-        gpgkey=https://packages.microsoft.com/keys/microsoft.asc
-        baseurl=https://packages.microsoft.com/yumrepos/vscode
-        enabled=1
-        gpgcheck=1
-
   # List of dnf packages to install.
   dnf:
     ###> System/CLI apps
@@ -87,7 +77,7 @@ apps:
     - vlc
 
     ###> Developer tools
-    - https://downloads.slack-edge.com/linux_releases/slack-4.14.0-0.1.fc21.x86_64.rpm
+    - https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64
     - '@development-tools' # Build-essentials analog.
     - golang
     - sublime-merge
