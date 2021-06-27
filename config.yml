@@ -52,6 +52,7 @@ apps:
     ###> Media/Internet/Office
     - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
     - https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
+    - https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm
     - https://zoom.us/client/latest/zoom_x86_64.rpm
 
     - firefox
