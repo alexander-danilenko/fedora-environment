@@ -65,7 +65,6 @@ apps:
     - flameshot
     - inkscape
     - transmission
-    - telegram-desktop
     - vlc
 
     ###> Developer tools
@@ -108,6 +107,7 @@ apps:
     - com.skype.Client # Skype messanger
     - com.viber.Viber # Viber messanger
     - com.xnview.XnViewMP # Media viewer
+    - org.telegram.desktop # Best IM!
     # - com.discordapp.Discord
     # - com.rafaelmardojai.Blanket # Listen to different sounds
     # - com.spotify.Client
