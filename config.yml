@@ -173,10 +173,10 @@ python:
   pip3:
     # List of global packages to install.
     global:
+      - click # Handy-dandy module for writing terminal apps.
+      - feedparser # RSS parser.
       - ffmpeg-normalize # Normalizes audio using ffmpeg.
       - yq # Takes YAML input and retrieves data by query.
-      - rivalcfg # SteelSeries Rival mouses configuration tool.
-                 # sudo rivalcfg --sensitivity1 800 --sensitivity2 1200 --polling-rate 1000 --light-effect breath --color red
 
 vscode:
   install: yes
