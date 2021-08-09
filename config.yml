@@ -69,7 +69,7 @@ apps:
 
     ###> Developer tools
     - https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64
-    - https://downloads.slack-edge.com/linux_releases/slack-4.17.0-0.1.fc21.x86_64.rpm
+    - https://downloads.slack-edge.com/releases/linux/4.18.0/prod/x64/slack-4.18.0-0.1.fc21.x86_64.rpm
     - '@development-tools' # Build-essentials analog.
     - golang
     - sublime-merge
