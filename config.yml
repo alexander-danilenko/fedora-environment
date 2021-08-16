@@ -200,6 +200,7 @@ vscode:
     - pkief.material-icon-theme          # Material Icon Theme
     #- TabNine.tabnine-vscode            # AI-assisted autocomplete
     - tyriar.lorem-ipsum                 # Lorem Ipsum generator
+    - tommasov.hosts                     # Hosts file syntax highlighter.
     - william-voyek.vscode-nginx         # nginx.conf support
     - yzhang.markdown-all-in-one         # Markdown tools
     #- alefragnani.Bookmarks             # Bookmarks
@@ -208,7 +209,6 @@ vscode:
     - christian-kohler.npm-intellisense # NPM better autocomplete
     - dbaeumer.vscode-eslint            # Eslint support
     - mariusschulz.yarn-lock-syntax     # yarn.lock syntax highlight
-
     # PHP/Drupal specific extensions
     - ikappas.composer         # Composer support
     - ikappas.phpcs            # PHP CodeSniffer
