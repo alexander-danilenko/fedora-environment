@@ -176,6 +176,7 @@ python:
       - click # Handy-dandy module for writing terminal apps.
       - feedparser # RSS parser.
       - ffmpeg-normalize # Normalizes audio using ffmpeg.
+      - ffpb # ffmpeg with progress bar.
       - yq # Takes YAML input and retrieves data by query.
 
 vscode:
