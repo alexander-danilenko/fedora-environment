@@ -1,4 +1,7 @@
 apps:
+  dnf_config:
+    defaultyes: 'True' # Set default dnf answer to "Y".
+
   # List of 3rd party apt repos to add.
   repos:
     docker-ce:

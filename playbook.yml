@@ -104,6 +104,17 @@
 
     ############ Install software ##############################################
 
+    - name: 'Update dnf config'
+      become: yes
+      when: apps.dnf_config is defined
+      loop: '{{ apps.dnf_config | default({}) | dict2items }}'
+      lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: '^{{ item.key }}'
+        line: '{{ item.key }}={{ item.value }}'
+      tags:
+       - dnf
+
     - name: 'Add RPM repo keys'
       when: apps.repos is defined and item.value.gpg is defined
       become: yes
