@@ -163,6 +163,15 @@
         - repos
         - rpmfusion
 
+    - name: 'Update dnf cache'
+      when: apps.dnf is defined
+      become: yes
+      dnf:
+        update_cache: yes
+      tags:
+        - software
+        - dnf
+
     - name: 'Install dnf packages'
       when: apps.dnf is defined
       become: yes
@@ -170,10 +179,9 @@
         name: '{{ apps.dnf }}'
         state: present
         disable_gpg_check: yes
-        update_cache: yes
       tags:
         - software
-        - apt
+        - dnf
 
     - name: 'Make sure flatpak is installed'
       when: apps.flatpak is defined
