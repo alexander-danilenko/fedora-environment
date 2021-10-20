@@ -58,13 +58,11 @@ apps:
     - https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm
     - https://zoom.us/client/latest/zoom_x86_64.rpm
 
-    - firefox
-    - google-chrome-stable
-
     - clementine
     - dia
     - evolution
     - evolution-ews
+    - firefox
     - flameshot
     - inkscape
     - transmission
@@ -73,7 +71,7 @@ apps:
     ###> Developer tools
     - https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64
     - https://downloads.slack-edge.com/releases/linux/4.18.0/prod/x64/slack-4.18.0-0.1.fc21.x86_64.rpm
-    - '@development-tools' # Build-essentials analog.
+    - '@development-tools' # Build-essentials alternative.
     - golang
     - sublime-merge
     - sublime-text
@@ -108,13 +106,13 @@ apps:
     - com.getpostman.Postman # API debugging tool
     - com.github.johnfactotum.Foliate # eBook reader
     - com.skype.Client # Skype messanger
-    - com.viber.Viber # Viber messanger
+    - com.synology.SynologyDrive # Synology Drive Client
     - com.xnview.XnViewMP # Media viewer
     - org.telegram.desktop # Best IM!
     # - com.discordapp.Discord
     # - com.rafaelmardojai.Blanket # Listen to different sounds
     # - com.spotify.Client
-    # - com.synology.SynologyDrive # Synology Drive Client
+    # - com.viber.Viber # Viber messanger
 
 docker:
   install: yes
