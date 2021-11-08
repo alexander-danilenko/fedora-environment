@@ -1,6 +1,6 @@
-<img src="https://cdn.svgporn.com/logos/fedora.svg" width="182" align="right" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Fedora_icon_%282021%29.svg" width="182" align="right" />
 
-# Fedora 34 environment
+# Fedora 35 environment
 
 This repo contains [Ansible](https://www.ansible.com/) script for fast and easy DevOps/Web Developer environment setup on [Fedora](https://getfedora.org/) and destributions based on it.
 
@@ -36,7 +36,7 @@ Following tools will be installed:
 
 ## Requirements
 
-<img src="https://cdn.svgporn.com/logos/fedora.svg" height="12" /> **Fedora 34**
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Fedora_icon_%282021%29.svg" height="12" /> **Fedora 35**
 
 **Fedora** here means [Fedora Workstation](https://getfedora.org/workstation/) itself and all [Fedora spins](https://spins.fedoraproject.org/).
 

@@ -1,4 +1,5 @@
 apps:
+  # Settings for /etc/dnf/dnf.conf
   dnf_config:
     defaultyes: 'True' # Set default dnf answer to "Y".
 
@@ -25,32 +26,25 @@ apps:
   # List of dnf packages to install.
   dnf:
     ###> System/CLI apps
-    - exfat-utils # Utilities to create, check, label and dump exFAT file system 
-    - grub-customizer # GUI for GRUB settings management
-    - htop # Terminal system monitor
+    - cifs-utils   # CIFS driver for NFS mounts
+    - htop         # Terminal system monitor
     - java-latest-openjdk # Jave development kit
-    - jq # Takes JSON input and retrieves data by query
-    - mc # Two panel terminal file manager
-    - neofetch # Shows Linux System Information with Distribution Logo
-    - net-tools # Base network tools
+    - jq           # Takes JSON input and retrieves data by query
+    - mc           # Two panel terminal file manager
+    - mediawriter  # Fedora Media Writer (ISO to USB Flash)
+    - neofetch     # Shows Linux System Information with Distribution Logo
+    - net-tools    # Base network tools
     - openfortivpn # Corporate VPN open source alternative.
-    - stacer # Cool CleanMyMac alternative
-    - cifs-utils # CIFS driver for NFS mounts
-    - traceroute # Traces the route taken by packets over an IPv4/IPv6 network
-    - tree # Displays an indented directory tree, in color
-    - mediawriter # Fedora Media Writer (ISO to USB Flash)
-
-    ###> Archive formats support
-    - arj # arj archiver
-    - lha # lzh unarchiver
-    - unrar # rar unarchiver
+    - stacer       # Cool CleanMyMac alternative
+    - traceroute   # Traces the route taken by packets over an IPv4/IPv6 network
+    - tree         # Displays an indented directory tree, in color
 
     ###> Office
     - libreoffice
-    - libreoffice-langpack-uk
-    - libreoffice-langpack-ru
-    - libreoffice-help-uk
     - libreoffice-help-ru
+    - libreoffice-help-uk
+    - libreoffice-langpack-ru
+    - libreoffice-langpack-uk
 
     ###> Media/Internet/Office
     - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
@@ -66,11 +60,9 @@ apps:
     - flameshot
     - inkscape
     - transmission
-    - vlc
 
     ###> Developer tools
     - https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64
-    - https://downloads.slack-edge.com/releases/linux/4.18.0/prod/x64/slack-4.18.0-0.1.fc21.x86_64.rpm
     - '@development-tools' # Build-essentials alternative.
     - golang
     - sublime-merge
@@ -105,14 +97,19 @@ apps:
   flatpak:
     - com.getpostman.Postman # API debugging tool
     - com.github.johnfactotum.Foliate # eBook reader
-    - com.skype.Client # Skype messanger
+    - com.slack.Slack
     - com.synology.SynologyDrive # Synology Drive Client
-    - com.xnview.XnViewMP # Media viewer
+    - com.xnview.XnViewMP
+    - org.remmina.Remmina # Remote desktop client (RDP, VNC)
     - org.telegram.desktop # Best IM!
     # - com.discordapp.Discord
+    # - com.microsoft.Teams
     # - com.rafaelmardojai.Blanket # Listen to different sounds
+    # - com.skype.Client
     # - com.spotify.Client
     # - com.viber.Viber # Viber messanger
+    # - org.videolan.VLC
+    # - us.zoom.Zoom # Yeah, I hate it too
 
 docker:
   install: yes
@@ -127,8 +124,6 @@ php:
   install: yes
   composer:
     # List of global composer packages to install.
-    #
-    # NOTE: All the following packages will be installed using `consolidation/cgr`.
     global:
       - drush/drush
       - squizlabs/php_codesniffer
@@ -139,15 +134,16 @@ php:
 node:
   install: yes
   # List of node versions to install.
-  versions: 
-    - 14
-    - 12
-    - 10
+  versions:
+    - 16 # LTS: Current
+    - 14 # LTS: Previous
+    - 12 # LTS: Legacy
   defaultVersion: node # Latest installed node version.
   npm:
     # List of global npm packages to install for default node.
     global: 
       - bower
+      - dynamodb-admin # Handy Web-UI for viewing local DynamoDB data
       - eslint
       - eslint-config-airbnb
       - eslint-config-google
@@ -164,6 +160,7 @@ node:
       - gulp
       - http-server
       - lsp
+      - snyk
       - typescript
       - vscode-css-languageserver-bin
       - vscode-html-languageserver-bin
@@ -174,46 +171,46 @@ python:
   pip3:
     # List of global packages to install.
     global:
-      - click # Handy-dandy module for writing terminal apps.
-      - feedparser # RSS parser.
+      - click            # Handy-dandy module for writing terminal apps.
+      - feedparser       # RSS parser.
       - ffmpeg-normalize # Normalizes audio using ffmpeg.
-      - ffpb # ffmpeg with progress bar.
-      - yq # Takes YAML input and retrieves data by query.
+      - ffpb             # ffmpeg with progress bar.
+      - yq               # Takes YAML input and retrieves data by query.
 
 vscode:
   install: yes
   # List of plugins to install.
   extensions:
     - amazonwebservices.aws-toolkit-vscode # AWS toolkit
-    - acarreiro.calculate                # Calculates inline math expr
-    - christian-kohler.path-intellisense # File path autocomplete
-    - coenraads.bracket-pair-colorizer   # Bracket Pair Colorizer
-    - dakara.transformer                 # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
-    - editorconfig.editorconfig          # EditorConfig support
-    - esbenp.prettier-vscode             # Prettier - Code formatter
-    - github.github-vscode-theme         # GitHub color theme
-    - golang.go                          # Golang support
-    - hookyqr.beautify                   # HTML/JSON beautifier
-    - mhutchie.git-graph                 # Git graph
-    - mikestead.dotenv                   # .env support
-    - ms-azuretools.vscode-docker        # Docker support
-    - ms-python.python                   # Python support
-    - ms-vscode-remote.remote-ssh        # SSH support 
-    - pkief.material-icon-theme          # Material Icon Theme
-    #- TabNine.tabnine-vscode            # AI-assisted autocomplete
-    - tyriar.lorem-ipsum                 # Lorem Ipsum generator
-    - tommasov.hosts                     # Hosts file syntax highlighter.
-    - william-voyek.vscode-nginx         # nginx.conf support
-    - yzhang.markdown-all-in-one         # Markdown tools
-    #- alefragnani.Bookmarks             # Bookmarks
+    - acarreiro.calculate                  # Calculates inline math expr
+    - christian-kohler.path-intellisense   # File path autocomplete
+    - coenraads.bracket-pair-colorizer     # Bracket Pair Colorizer
+    - dakara.transformer                   # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
+    - editorconfig.editorconfig            # EditorConfig support
+    - esbenp.prettier-vscode               # Prettier - Code formatter
+    - github.github-vscode-theme           # GitHub color theme
+    - golang.go                            # Golang support
+    - hookyqr.beautify                     # HTML/JSON beautifier
+    - mhutchie.git-graph                   # Git graph
+    - mikestead.dotenv                     # .env support
+    - ms-azuretools.vscode-docker          # Docker support
+    - ms-python.python                     # Python support
+    - ms-vscode-remote.remote-ssh          # SSH support 
+    - pkief.material-icon-theme            # Material Icon Theme
+    #- TabNine.tabnine-vscode              # AI-assisted autocomplete
+    - tyriar.lorem-ipsum                   # Lorem Ipsum generator
+    - tommasov.hosts                       # Hosts file syntax highlighter.
+    - william-voyek.vscode-nginx           # nginx.conf support
+    - yzhang.markdown-all-in-one           # Markdown tools
+    #- alefragnani.Bookmarks               # Bookmarks
 
     # Node/NPM/Yarn specific extensions
     - christian-kohler.npm-intellisense # NPM better autocomplete
     - dbaeumer.vscode-eslint            # Eslint support
     - mariusschulz.yarn-lock-syntax     # yarn.lock syntax highlight
     # PHP/Drupal specific extensions
-    - ikappas.composer         # Composer support
-    - ikappas.phpcs            # PHP CodeSniffer
+    - ikappas.composer # Composer support
+    - ikappas.phpcs    # PHP CodeSniffer
 
 jetbrains:
   toolbox:

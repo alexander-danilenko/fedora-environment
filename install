@@ -16,7 +16,7 @@ if (( ${#MISSING_PREREQUISITES[@]} )); then
   green=`tput setaf 2`
   yellow=`tput setaf 3`
   reset=`tput sgr0`
-  echo "${green}Installing prerequisite apt packages: ${yellow}${MISSING_PREREQUISITES[*]}${reset}"
+  echo "${green}Installing prerequisite dnf packages: ${yellow}${MISSING_PREREQUISITES[*]}${reset}"
   echo "${yellow}NOTE:${reset} This process could take a while..."
   sudo dnf install -y -q ${MISSING_PREREQUISITES[*]}
 fi

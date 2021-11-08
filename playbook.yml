@@ -259,31 +259,12 @@
         - php
         - composer
 
-    - name: 'Install "cgr/consolidation" global package'
-      when: php.install|bool and php.composer.global is defined
-      shell: '. ~/.profile && composer global require consolidation/cgr'
-      args:
-        executable: '/bin/bash'
-        creates: '~/.composer/vendor/bin/cgr'
-      tags:
-        - php
-        - composer
-
-    - name: 'List composer global packages installed'
-      when: php.install|bool and php.composer.global is defined
-      shell: 'tree ~/.composer/global -d -f -L 2'
-      register: composer_global_packages
-      tags:
-        - php
-        - composer
-
-    - name: 'Install global packages using "cgr"'
+    - name: 'Install global packages'
       when: |
         php.install|bool
         and php.composer.global is defined
-        and composer_global_packages.stdout.find(item) == -1
       loop: '{{ php.composer.global }}'
-      shell: '. ~/.profile && cgr {{ item }}'
+      shell: '. ~/.profile && composer global require {{ item }}'
       args:
         executable: '/bin/bash'
       tags:
@@ -294,11 +275,11 @@
       when: php.install|bool and php.composer.global is defined and 'drupal/coder' in php.composer.global and 'squizlabs/php_codesniffer' in php.composer.global
       synchronize:
         src: '{{ item }}'
-        dest: '~/.composer/global/squizlabs/php_codesniffer/vendor/squizlabs/php_codesniffer/src/Standards'
+        dest: '~/.composer/vendor/squizlabs/php_codesniffer/src/Standards'
         recursive: yes
       with_items:
-        - '~/.composer/global/drupal/coder/vendor/drupal/coder/coder_sniffer/Drupal'
-        - '~/.composer/global/drupal/coder/vendor/drupal/coder/coder_sniffer/DrupalPractice'
+        - '~/.composer/vendor/drupal/coder/coder_sniffer/Drupal'
+        - '~/.composer/vendor/drupal/coder/coder_sniffer/DrupalPractice'
       tags:
         - php
         - composer
