@@ -38,6 +38,8 @@
         dest: '~'
         recursive: yes
         compress: no
+        rsync_opts:
+          - "--exclude=.git"
       register: home_dir_copied
       tags:
         - home
