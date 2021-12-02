@@ -6,29 +6,28 @@
 
   tasks:
 
-    ############ Extend fs.inotify.max_user_watches value ######################
-    # @see https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
+    ############ Adjust /etc/sysctl.conf #######################################
 
-    - name: Extend fs.inotify.max_user_watches
+    - name: 'Update /etc/sysctl.conf '
       become: yes
+      when: sysctl is defined
+      loop: '{{ sysctl | default({}) | dict2items }}'
       lineinfile:
         path: /etc/sysctl.conf
-        regexp: '^fs.inotify.max_user_watches'
-        line: fs.inotify.max_user_watches = 524288
-      register: inotify
+        regexp: '^{{ item.key }}'
+        line: '{{ item.key }}={{ item.value }}'
+      register: sysctltask
       tags:
-        - shell
-        - inotify
+        - sysctl
 
     - name: 'Read new values from /etc/sysctl.conf'
       become: yes
-      when: inotify.changed
+      when: sysctltask.changed
       shell: 'sysctl -p'
       args:
         executable: '/bin/bash'
       tags:
-        - shell
-        - inotify
+        - sysctl
 
     ############ Copy "./dotfiles" directory #######################################
 

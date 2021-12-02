@@ -1,3 +1,7 @@
+sysctl: # /etc/sysctl.conf adjustments.
+  'fs.inotify.max_user_watches': 524288 # @see https://bit.ly/30PmSLL
+  'vm.max_map_count': 262144            # @see https://bit.ly/3xgGfJS
+
 apps:
   # Settings for /etc/dnf/dnf.conf
   dnf_config:
