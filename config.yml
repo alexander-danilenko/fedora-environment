@@ -186,36 +186,38 @@ vscode:
   # List of plugins to install.
   extensions:
     - amazonwebservices.aws-toolkit-vscode # AWS toolkit
-    - acarreiro.calculate                  # Calculates inline math expr
-    - christian-kohler.path-intellisense   # File path autocomplete
-    - coenraads.bracket-pair-colorizer     # Bracket Pair Colorizer
-    - dakara.transformer                   # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
-    - editorconfig.editorconfig            # EditorConfig support
-    - esbenp.prettier-vscode               # Prettier - Code formatter
-    - github.github-vscode-theme           # GitHub color theme
-    - golang.go                            # Golang support
-    - hookyqr.beautify                     # HTML/JSON beautifier
-    - mhutchie.git-graph                   # Git graph
-    - mikestead.dotenv                     # .env support
-    - ms-azuretools.vscode-docker          # Docker support
-    - ms-python.python                     # Python support
-    - ms-vscode-remote.remote-ssh          # SSH support 
-    - pkief.material-icon-theme            # Material Icon Theme
-    #- TabNine.tabnine-vscode              # AI-assisted autocomplete
-    - tyriar.lorem-ipsum                   # Lorem Ipsum generator
-    - tommasov.hosts                       # Hosts file syntax highlighter.
-    - william-voyek.vscode-nginx           # nginx.conf support
-    - yzhang.markdown-all-in-one           # Markdown tools
-    #- alefragnani.Bookmarks               # Bookmarks
+    - acarreiro.calculate                # Calculates inline math expr
+    - christian-kohler.path-intellisense # File path autocomplete
+    - coenraads.bracket-pair-colorizer   # Bracket Pair Colorizer
+    - dakara.transformer                 # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
+    - editorconfig.editorconfig          # EditorConfig support
+    - esbenp.prettier-vscode             # Prettier - Code formatter
+    - golang.go                          # Golang support
+    - hookyqr.beautify                   # HTML/JSON beautifier
+    - mhutchie.git-graph                 # Git graph
+    - mikestead.dotenv                   # .env support
+    - ms-azuretools.vscode-docker        # Docker support
+    - ms-python.python                   # Python support
+    - ms-vscode-remote.remote-ssh        # SSH support 
+    #- TabNine.tabnine-vscode            # AI-assisted autocomplete
+    - tyriar.lorem-ipsum                 # Lorem Ipsum generator
+    - tommasov.hosts                     # Hosts file syntax highlighter.
+    - william-voyek.vscode-nginx         # nginx.conf support
+    - yzhang.markdown-all-in-one         # Markdown tools
+    #- alefragnani.Bookmarks             # Bookmarks
 
     # Node/NPM/Yarn specific extensions
     - christian-kohler.npm-intellisense # NPM better autocomplete
     - dbaeumer.vscode-eslint            # Eslint support
     - mariusschulz.yarn-lock-syntax     # yarn.lock syntax highlight
     # PHP/Drupal specific extensions
-    - ikappas.composer # Composer support
-    - ikappas.phpcs    # PHP CodeSniffer
+    - ikappas.composer         # Composer support
+    - ikappas.phpcs            # PHP CodeSniffer
 
+    # Themes
+    - github.github-vscode-theme         # GitHub color theme
+    - pkief.material-icon-theme          # Material Icon Theme
+    - rokoroku.vscode-theme-darcula      # JetBrains-like theme.
 jetbrains:
   toolbox:
     install: yes
