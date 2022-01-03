@@ -1,0 +1,4 @@
+---
+# List of directories needs to be created in a home directory.
+dotfiles_home_dirs:
+  - '{{ ansible_env.HOME }}/.local/bin'

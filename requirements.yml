@@ -1,0 +1,35 @@
+---
+
+roles:
+  - name: aws-cli
+    src: deekayen.awscli2
+
+  - name: docker
+    src: https://github.com/haxorof/ansible-role-docker-ce
+
+  - name: docksal
+    src: https://github.com/alexander-danilenko/ansible-role-docksal
+
+  - name: google-cloud-sdk
+    src: markosamuli.gcloud
+
+  - name: google-fonts
+    src: https://github.com/alexander-danilenko/ansible-role-google-fonts
+
+  - name: jetbrains-toolbox
+    src: https://github.com/jaredhocutt/ansible-jetbrains-toolbox
+
+  - name: node
+    src: https://github.com/alexander-danilenko/ansible-role-node
+
+  - name: php-composer
+    src: https://github.com/alexander-danilenko/ansible-role-php-composer
+
+  - name: rpmfusion
+    src: https://github.com/robertdebock/ansible-role-rpmfusion
+
+  - name: visual-studio-code
+    src: gantsign.visual-studio-code
+
+  - name: zsh
+    src: https://github.com/alexander-danilenko/ansible-role-zsh-antigen

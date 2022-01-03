@@ -1,4 +1,4 @@
-[submodule "dotfiles"]
-	path = dotfiles
+[submodule "roles/dotfiles/files"]
+	path = roles/dotfiles/files
 	url = https://github.com/alexander-danilenko/dotfiles.git
-	branch = main
+  branch = main

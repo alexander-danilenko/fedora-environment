@@ -1,0 +1,9 @@
+---
+apps_flatpak_packages: [] # List of flatpak app ids to install.
+apps_packages: [] # List of packages applicable to current system and distro. 
+
+apps_rpm_urls: {} # Object in format: {filename_without_extension: url}
+apps_rpm_dir: '{{ role_path }}/files'
+
+apps_dnf_config:
+  defaultyes: 'True' # Set default dnf answer to "Y".

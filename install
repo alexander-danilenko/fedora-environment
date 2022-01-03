@@ -2,26 +2,8 @@
 
 set -e
 
-################## Variables ###################################################
-
-# Packages required for script to run.
-MISSING_PREREQUISITES=()
-
-[ ! -x "$(command -v git)" ] && MISSING_PREREQUISITES+=("git")
-[ ! -x "$(command -v ansible)" ] && MISSING_PREREQUISITES+=("ansible")
-[ ! -x "$(command -v curl)" ] && MISSING_PREREQUISITES+=("curl")
-
-# If missing prerequisites is not empty.
-if (( ${#MISSING_PREREQUISITES[@]} )); then
-  green=`tput setaf 2`
-  yellow=`tput setaf 3`
-  reset=`tput sgr0`
-  echo "${green}Installing prerequisite dnf packages: ${yellow}${MISSING_PREREQUISITES[*]}${reset}"
-  echo "${yellow}NOTE:${reset} This process could take a while..."
-  sudo dnf install -y -q ${MISSING_PREREQUISITES[*]}
-fi
-
-# Download dotfiles as git submodules.
-git submodule update --init --remote --force ./dotfiles/
+# Download ansible requirements.
+mkdir -p vendor/roles
+ansible-galaxy install -r requirements.yml --roles-path vendor/roles
 
 ansible-playbook playbook.yml --ask-become-pass "$@"

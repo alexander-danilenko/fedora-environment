@@ -1,0 +1,35 @@
+---
+
+- name: 'Check updates for dotfiles'
+  command: git submodule update --init --remote --force ./files
+  args:
+    chdir: '{{ role_path }}'
+
+- name: 'Make sure all directories in home directory are created'
+  loop: '{{ dotfiles_home_dirs }}'
+  file:
+    state: directory
+    path: '{{ item }}'
+
+- name: 'Make sure rsync is installed'
+  become: yes
+  package:
+    state: present
+    name: 'rsync'
+
+- name: 'Copy dotfiles to "{{ ansible_env.HOME }}" directory'
+  synchronize:
+    src: '{{ role_path }}/files/'
+    dest: '{{ ansible_env.HOME }}'
+    recursive: yes
+    compress: no
+    rsync_opts:
+      - '--exclude=.git'
+  register: dotfiles_copied
+
+- name: 'Reset fonts cache after dotfiles copying'
+  become: no
+  when: dotfiles_copied.changed
+  shell: 'fc-cache -f -v'
+  args:
+    executable: '/bin/bash'

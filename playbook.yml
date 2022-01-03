@@ -1,608 +1,98 @@
 ---
 - hosts: 127.0.0.1
   connection: local
+  gather_facts: yes # Run gather_facts to define ansible_env.HOME
   vars_files:
     - ./config.yml
 
-  tasks:
+  roles:
+    #### System and terminal-related changes. ##################################
+    - role: roles/sysctl
+    - role: roles/dotfiles
+    - role: vendor/roles/zsh
+    - role: vendor/roles/google-fonts
+      when: google_fonts.install|bool and google_fonts.fonts_list|length > 0
+      vars:
+        google_fonts_install_dir: '{{ google_fonts.fonts_dir }}'
+        google_fonts_list: '{{ google_fonts.fonts_list }}'
+      tags: [fonts]
 
-    ############ Adjust /etc/sysctl.conf #######################################
+    #### Languages and interpreters. ###########################################
+    - role: vendor/roles/node
+      when: node.install|bool
+      vars:
+        nvm_node_version: '{{ node.version }}'
+        nvm_npm_global_packages: '{{ node.npm_global_packages }}'
+      tags: [node, nvm, npm]
 
-    - name: 'Update /etc/sysctl.conf '
-      become: yes
-      when: sysctl is defined
-      loop: '{{ sysctl | default({}) | dict2items }}'
-      lineinfile:
-        path: /etc/sysctl.conf
-        regexp: '^{{ item.key }}'
-        line: '{{ item.key }}={{ item.value }}'
-      register: sysctltask
-      tags:
-        - sysctl
+    - role: roles/python3
+      when: python3.install|bool
+      vars:
+        python3_version: '{{ python3.version }}'
+        python3_pip3_global_packages: '{{ python3.pip3_global_packages }}'
+      tags: [python, python3, pip3, pip]
 
-    - name: 'Read new values from /etc/sysctl.conf'
-      become: yes
-      when: sysctltask.changed
-      shell: 'sysctl -p'
-      args:
-        executable: '/bin/bash'
-      tags:
-        - sysctl
-
-    ############ Copy "./dotfiles" directory #######################################
-
-    - name: 'Copy "./dotfiles" contents to user home directory'
-      synchronize:
-        src: './dotfiles/'
-        dest: '~'
-        recursive: yes
-        compress: no
-        rsync_opts:
-          - "--exclude=.git"
-      register: home_dir_copied
-      tags:
-        - home
-        
-    - name: 'Create home directories'
-      file:
-        state: directory
-        path: '{{ item }}'
-      with_items:
-        - '~/.local/bin'
-
-      tags:
-        - home
-
-    - name: 'Reset fonts cache'
-      become: no
-      when: home_dir_copied.changed
-      shell: 'fc-cache -f -v'
-      args:
-        executable: '/bin/bash'
-      tags:
-        - home
-
-    ############ Install ZSH + Antigen #########################################
-
-    - name: 'Copy ".profile" and ".zshrc" to home directory'
-      copy:
-        src: '{{ item }}'
-        dest: '~'
-        backup: no
-      with_items:
-        - './dotfiles/.profile'
-        - './dotfiles/.zshrc'
-      tags:
-        - shell
-        - zsh
-
-    - name: 'Install "zsh" package'
-      become: true
-      dnf:
-        state: present
-        name: 'zsh'
-      tags:
-        - shell
-        - zsh
-
-    - name: 'Create ~/.antigen directory'
-      file:
-        path: '~/.antigen'
-        state: 'directory'
-      tags:
-        - shell
-        - zsh
-        - antigen
-
-    - name: 'Download Antigen'
-      get_url:
-        url: 'https://git.io/antigen'
-        dest: '~/.antigen/antigen.zsh'
-      tags:
-        - shell
-        - zsh
-        - antigen
-
-    ############ Install software ##############################################
-
-    - name: 'Update dnf config'
-      become: yes
-      when: apps.dnf_config is defined
-      loop: '{{ apps.dnf_config | default({}) | dict2items }}'
-      lineinfile:
-        path: /etc/dnf/dnf.conf
-        regexp: '^{{ item.key }}'
-        line: '{{ item.key }}={{ item.value }}'
-      tags:
-       - dnf
-
-    - name: 'Add RPM repo keys'
-      when: apps.repos is defined and item.value.gpg is defined
-      become: yes
-      loop: '{{ apps.repos | dict2items }}'
-      rpm_key:
-        state: present
-        key: '{{ item.value.gpg }}'
-      tags:
-        - software
-        - dnf
-        - repos
-
-    - name: 'Add RPM repos by URL'
-      when: apps.repos is defined and item.value.url is defined
-      become: yes
-      loop: '{{ apps.repos | dict2items }}'
-      shell: 'dnf config-manager --add-repo {{ item.value.url }}'
-      tags:
-        - software
-        - dnf
-        - repos
-
-    - name: 'Add RPM repos by content'
-      when: apps.repos is defined and item.value.repo is defined
-      become: yes
-      loop: '{{ apps.repos | dict2items }}'
-      copy:
-        dest: '/etc/yum.repos.d/{{ item.key }}.repo'
-        content: '{{ item.value.repo }}'
-      tags:
-        - software
-        - dnf
-        - repos
-  
-    - name: 'Install rpmfusion'
-      become: yes
-      shell: |
-        dnf install -y \
-          https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-          https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-      args:
-        creates: '/etc/yum.repos.d/rpmfusion-*'
-      tags:
-        - software
-        - dnf
-        - repos
-        - rpmfusion
-
-    - name: 'Update dnf cache'
-      when: apps.dnf is defined
-      become: yes
-      dnf:
-        update_cache: yes
-      tags:
-        - software
-        - dnf
-
-    - name: 'Install dnf packages'
-      when: apps.dnf is defined
-      become: yes
-      dnf:
-        name: '{{ apps.dnf }}'
-        state: present
-        disable_gpg_check: yes
-      tags:
-        - software
-        - dnf
-
-    - name: 'Make sure flatpak is installed'
-      when: apps.flatpak is defined
-      become: yes
-      dnf:
-        name: flatpak
-        state: present
-      tags:
-        - software
-        - flatpak
-
-    - name: 'Make sure flathub repo is added'
-      become: yes
-      when: apps.flatpak is defined
-      shell: 'flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo'
-      args:
-        executable: '/bin/bash'
-      tags:
-        - software
-        - flatpak
-
-    - name: 'Install flatpak packages'
-      when: apps.flatpak is defined
-      loop: '{{ apps.flatpak }}'
-      flatpak:
-        name:  '{{ item }}'
-        state: present
-        remote: flathub
-      tags:
-        - software
-        - flatpak
-
-    ############ Install PHP + composer + global packages ######################
-
-    - name: 'Install PHP dnf packages'
+    - role: vendor/roles/php-composer
       when: php.install|bool
+      vars:
+        php_composer_global_packages: '{{ php.composer_global_packages }}'
+      tags: [php, composer]
+
+    #### Code Editors and IDEs. ################################################
+    - role: vendor/roles/jetbrains-toolbox
+      when: apps.jetbrains_toolbox.install|bool
+      tags: [ide, jetbrains, jetbrains-toolbox]
+
+    - role: vendor/roles/visual-studio-code
+      when: apps.visual_studio_code.install|bool
+      vars:
+        users:
+          - username: '{{ ansible_env.USER }}'
+            visual_studio_code_extensions: '{{ apps.visual_studio_code.extensions }}'
+      tags: [editor, microsoft, code, vscode, visual-studio-code]
+
+    #### Cloud tools and utils. ################################################
+    - role: vendor/roles/aws-cli
+      when: cloud.aws_cli.install|bool
+      tags: [cloud, aws, aws-cli]
+
+    - role: vendor/roles/google-cloud-sdk
+      # RedHat derivative distros does not support this role.
+      when: cloud.gcloud.install|bool and ansible_facts["os_family"]  != 'RedHat'
+      vars:
+        gcloud_version: '{{ cloud.gcloud.version }}'
+        gcloud_install_from_package_manager: false
+        gcloud_install_dir: '/.gcp' # Installs SDK to '$HOME/.gcp/google-cloud-sdk'
+        gcloud_additional_components: '{{ cloud.gcloud.components }}'
+        gcloud_prefer_python3: true
+      tags: [cloud, gcloud, google-cloud]
+
+    #### Docker things. ########################################################
+    - role: vendor/roles/docker
+      vars:
+        docker_channel: stable
+      tags: [docker]
+
+    - role: vendor/roles/docksal
+      when: docker.install|bool and docksal.install|bool
+      vars:
+        docksal_global_config: '{{ docksal.config }}'
+      tags: [docksal]
+
+    #### Apps install. #########################################################
+    # Note: it's the most time-consuming process, so it needs to be happening at
+    # the very end of the playbook to make sure that all the rest is fine.
+
+    - role: vendor/roles/rpmfusion
       become: yes
-      dnf:
-        state: present
-        name:
-          - php-common
-          - php-cli
-          - php-curl
-          - php-gd
-          - php-intl
-          - php-json
-          - php-mbstring
-          - php-mysqli
-          - php-opcache
-          - php-pdo
-          - php-xml
-          - php-zip
-      tags:
-        - php
+      vars:
+        rpmfusion_free: yes
+        rpmfusion_nonfree: yes
+      tags: [apps, rpmfusion]
 
-    - name: 'Download "composer.phar"'
-      when: php.install|bool
-      get_url:
-        url: 'https://getcomposer.org/composer-stable.phar'
-        dest: '~/.local/bin/composer'
-        mode: '0755'
-      tags:
-        - php
-        - composer
-
-    - name: 'Create "~/.composer" directories'
-      when: php.install|bool
-      file:
-        path: '{{ item }}'
-        state: 'directory'
-      with_items:
-        - '~/.composer'
-        - '~/.composer/global'
-      tags:
-        - php
-        - composer
-
-    - name: 'Install global packages'
-      when: |
-        php.install|bool
-        and php.composer.global is defined
-      loop: '{{ php.composer.global }}'
-      shell: '. ~/.profile && composer global require {{ item }}'
-      args:
-        executable: '/bin/bash'
-      tags:
-        - php
-        - composer
-
-    - name: 'Enable "Drupal" code sniffer standards'
-      when: php.install|bool and php.composer.global is defined and 'drupal/coder' in php.composer.global and 'squizlabs/php_codesniffer' in php.composer.global
-      synchronize:
-        src: '{{ item }}'
-        dest: '~/.composer/vendor/squizlabs/php_codesniffer/src/Standards'
-        recursive: yes
-      with_items:
-        - '~/.composer/vendor/drupal/coder/coder_sniffer/Drupal'
-        - '~/.composer/vendor/drupal/coder/coder_sniffer/DrupalPractice'
-      tags:
-        - php
-        - composer
-        - drupal
-
-    ############ Install Node.js and npm packages ##############################
-
-    - name: 'Make sure "nodejs" dnf package is removed'
-      when: node.install|bool
-      become: yes
-      dnf:
-        state: absent
-        name: nodejs
-      tags:
-        - node
-
-    - name: 'Install node version manager'
-      when: node.install|bool
-      shell: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash'
-      args:
-        creates: '{{ ansible_env.HOME }}/.nvm/nvm.sh'
-        executable: '/bin/bash'
-      tags:
-        - node
-        - nvm
-
-    - name: 'List node versions installed'
-      when: node.install|bool
-      shell: '. ~/.profile && nvm ls --no-alias --no-colors'
-      register: node_versions_installed
-      ignore_errors: yes
-      tags:
-        - node
-        - nvm
-
-    - name: 'Install node versions'
-      when: node.install|bool and node_versions_installed.stdout.find('v{{ item }}') == -1
-      loop: '{{ node.versions }}'
-      shell: '. ~/.profile && nvm install {{ item }}'
-      args:
-        executable: '/bin/bash'
-      tags:
-        - node
-        - nvm
-
-    - name: 'Set default node version'
-      when: node.install|bool
-      shell: '. ~/.profile && nvm alias default {{ node.defaultVersion | default("node") }}'
-      args:
-        executable: '/bin/bash'
-      tags:
-        - node
-        - nvm
-
-    - name: 'List installed global packages'
-      shell: '. ~/.profile && npm list --global --depth=0'
-      args:
-        executable: '/bin/bash'
-      register: npm_global_packages
-      ignore_errors: yes
-      tags:
-        - node
-        - nvm
-
-    - name: 'Install global npm packages'
-      when: |
-        node.install|bool
-        and node.npm.global is defined
-        and npm_global_packages.stdout.find(item) == -1
-      loop: '{{ node.npm.global }}'
-      shell: '. ~/.profile && npm install --global {{ item }}'
-      args:
-        executable: '/bin/bash'
-      tags:
-        - node
-        - nvm
-        - npm
-
-    ############ Install python and pip3 packages ##############################
-
-    - name: 'Install Python dnf packages'
-      when: python.install|bool
-      become: yes
-      dnf:
-        state: present
-        name:
-          - python3-pip
-          - python3-docs
-      tags:
-        - python
-
-    - name: 'Install Python global packages'
-      when: python.install|bool and python.pip3.global is defined
-      shell: 'pip3 install --user {{ python.pip3.global | join(" ") }}'
-      args:
-        executable: '/bin/bash'
-      tags:
-        - python
-        - pip3
-
-    ############ Install and configure vscode ##################################
-
-    - name: 'Install "code" dnf package'
-      when: vscode.install|bool
-      become: yes
-      dnf:
-        state: present
-        name: code
-      tags:
-        - vscode
-
-    - name: 'Copy "code" settings from ./dotfiles'
-      when: vscode.install|bool
-      copy:
-        src: './dotfiles/.config/Code/User/settings.json'
-        dest: '~/.config/Code/User/settings.json'
-        backup: no
-      tags:
-        - vscode
-
-    - name: 'List installed code extensions'
-      shell: code --list-extensions
-      register: code_extensions
-      tags:
-        - vscode
-        - extensions
-
-    - name: 'Install code extensions'
-      when: vscode.install|bool and vscode.extensions is defined
-      loop: '{{ vscode.extensions }}'
-      shell: 'code --install-extension {{ item }}'
-      when: code_extensions.stdout.lower().find(item.lower()) == -1
-      # Assume that not all extensions available to download. Some extensions
-      # may be either removed or renamed.
-      ignore_errors: yes
-      args:
-        executable: '/bin/bash'
-      tags:
-        - vscode
-        - extensions
-
-    ############ Install JetBrains Toolbox #####################################
-
-    - name: 'Install JetBrains Toolbox'
-      when: jetbrains.toolbox.install is defined and jetbrains.toolbox.install|bool
-      become: yes
-      shell: 'curl -Ls https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh | sudo bash'
-      args:
-        executable: '/bin/bash'
-        creates: /opt/jetbrains-toolbox/
-      tags:
-        - jetbrains-toolbox
-
-    ############ Docker ########################################################
-    
-    - name: 'Add docker repo'
-      when: 'apps.repos["docker-ce"] is defined'
-      become: yes
-      shell: 'dnf config-manager --add-repo {{ apps.repos["docker-ce"].url }}'
-      tags:
-        - docker
-        - repos
-
-    - name: 'Install docker dnf packages'
-      when: docker.install|bool
-      become: yes
-      dnf:
-        state: present
-        pkg:
-          - docker-ce
-          - docker-compose
-      tags:
-        - docker
-
-#     - name: 'Move docker directory to ~/.docker'
-#       become: yes
-#       copy:
-#         content: |
-#           {
-#             "graph": "/home/{{ ansible_facts.user_id }}/.docker"
-#           }
-#         dest: '/etc/docker/daemon.json'
-#         owner: '{{ ansible_facts.user_id }}'
-#         group : '{{ ansible_facts.user_id }}'
-#         mode: '755'
-#       tags:
-#         - docker
-
-    - name: 'Start "docker" service on boot'
-      when: docker.install|bool
-      become: yes
-      service:
-        name: 'docker'
-        enabled: yes
-      tags:
-        - docker
-
-    - name: 'Restart "docker" service'
-      when: docker.install|bool
-      become: yes
-      service:
-        name: 'docker'
-        state: 'restarted'
-      tags:
-        - docker
-
-    - name: 'Make sure current user added to "docker" group'
-      when: docker.install|bool
-      become: yes
-      user:
-        name: '{{ lookup("env", "USER") }}'
-        groups: [docker]
-        append: yes
-      tags:
-        - docker
-
-    - name: Reset connection to use "docker" user group
-      when: docker.install|bool
-      meta: reset_connection
-      tags:
-        - docker
-
-    ############ Docksal #######################################################
-
-    - name: 'Install Docksal'
-      when: docker.install|bool and docker.docksal.install|bool
-      shell: 'curl -o- https://get.docksal.io | bash'
-      environment:
-        DOCKSAL_CONFIRM_YES: 1 # Force answer "y" to all y/n Docksal questions.  
-      args:
-        executable: '/bin/bash'
-        creates: /usr/local/bin/fin
-      register: docksal_install_ran
-      tags:
-        - docker
-        - docksal
-
-    - name: 'Set docksal settings'
-      when: |
-        docker.install|bool
-        and docker.docksal.install|bool
-        and docker.docksal.settings is defined
-      loop: '{{ docker.docksal.settings | default({}) | dict2items }}'
-      lineinfile:
-        path: ~/.docksal/docksal.env
-        regexp: '^{{ item.key }}'
-        line: '{{ item.key }}={{ item.value }}'
-      tags:
-        - docker
-        - docksal
-
-    ############ AWS CLI #######################################################
-
-    - name: 'Download AWS CLI v2'
-      when: cloud.aws.install|bool
-      unarchive:
-        src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-        dest: /tmp
-        remote_src: yes
-        creates: /tmp/aws
-        mode: 0755
-      tags:
-        - aws
-
-    - name: 'Install AWS CLI v2'
-      when: cloud.aws.install|bool
-      command:
-      args:
-        cmd: "/tmp/aws/install"
-        creates: /usr/local/bin/aws
-      become: true
-      register: aws_install
-      tags:
-        - aws
-
-    ############ Google Cloud SDK ##############################################
-
-    - name: 'Add Google Cloud SDK repo'
-      when: 'apps.repos["google-cloud-sdk"] is defined and cloud["google-cloud-sdk"].install|bool'
-      become: yes
-      copy:
-        dest: '/etc/yum.repos.d/google-cloud-sdk.repo'
-        content: |
-          [google-cloud-sdk]
-          name=Google Cloud SDK
-          baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
-          enabled=1
-          gpgcheck=1
-          repo_gpgcheck=1
-          gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
-                https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-      tags:
-        - google-cloud-sdk
-
-    - name: 'Install Google Cloud SDK dnf packages'
-      when: 'apps.repos["google-cloud-sdk"] is defined and cloud["google-cloud-sdk"].install|bool'
-      become: yes
-      dnf:
-        update_cache: yes
-        pkg: '{{ cloud["google-cloud-sdk"].packages }}'
-      tags:
-        - google-cloud-sdk
-
-    ############ Kubernetes ####################################################
-
-    - name: 'Add kubernetes repo'
-      when: apps.repos.kubernetes is defined
-      become: yes
-      copy:
-        dest: '/etc/yum.repos.d/kubernetes.repo'
-        content: '{{ apps.repos.kubernetes.repo }}'
-      tags:
-        - kubernetes
-        - k8s
-
-    - name: 'Install kubernetes dnf packages'
-      when: cloud.kubernetes.install|bool
-      become: yes
-      dnf:
-        state: present
-        pkg: '{{ cloud.kubernetes.packages }}'
-      tags:
-        - kubernetes
-        - k8s
-
+    - role: roles/apps
+      vars:
+        apps_packages: '{{ apps.packages }}'
+        apps_flatpak_packages: '{{ apps.flatpak }}'
+        apps_rpm_urls: '{{ apps.rpm_urls }}'
+      tags: [apps, packages, flatpak]

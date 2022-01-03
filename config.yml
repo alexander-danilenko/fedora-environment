@@ -1,109 +1,135 @@
-sysctl: # /etc/sysctl.conf adjustments.
-  'fs.inotify.max_user_watches': 524288 # @see https://bit.ly/30PmSLL
-  'vm.max_map_count': 262144            # @see https://bit.ly/3xgGfJS
+#### Languages and interpreters. ###############################################
+python3:
+  install: yes
+  pip3_global_packages:
+    - click            # Handy-dandy module for writing terminal apps.
+    - feedparser       # RSS parser.
+    - ffmpeg-normalize # Normalizes audio using ffmpeg.
+    - ffpb             # ffmpeg with progress bar.
+    - yq               # Takes YAML input and retrieves data by query.
 
+php:
+  install: yes
+  composer_global_packages: # NOTE: Packages will be installed using `consolidation/cgr`.
+    - drush/drush
+    - squizlabs/php_codesniffer
+    - drupal/coder              # PHPCS Drupal standards
+    - friendsofphp/php-cs-fixer # PHPCS standard fixer
+    - mglaman/drupal-check      # Drupal static code analysis tool
+
+node:
+  install: yes
+  version: 16 # LTS
+  npm_global_packages: 
+    - bower
+    - dynamodb-admin # Handy Web-UI for viewing local DynamoDB data
+    - eslint
+    - eslint-config-airbnb
+    - eslint-config-google
+    - eslint-config-standard
+    - eslint-plugin-import
+    - eslint-plugin-jsx-a11y
+    - eslint-plugin-node
+    - eslint-plugin-promise
+    - eslint-plugin-react
+    - eslint-plugin-react-hooks
+    - firebase-tools
+    - flow
+    - flow-bin
+    - gulp
+    - http-server
+    - lsp
+    - snyk
+    - typescript
+    - vscode-css-languageserver-bin
+    - vscode-html-languageserver-bin
+    - yarn
+
+#### Cloud tools and utils. ####################################################
+cloud:
+  # AWS CLI v2
+  aws_cli:
+    install: yes
+
+  ### @TODO: Add gcloud support.
+  # # Google Cloud SDK
+  # gcloud: 
+  #   install: yes
+  #   version: '367.0.0'
+  #   components:
+  #     - cloud-datastore-emulator
+  #     - cloud-firestore-emulator
+  #     - pubsub-emulator
+  #     - cloud-build-local
+  #     - kubectl
+  #     - minikube
+
+#### Docker things. ############################################################
+# Docker Community Edition
+docker:
+  install: yes
+
+# Docker Compose-based all-purpose web-development environment.
+# @see https://docksal.io/
+docksal:
+  install: yes
+  config:
+    DOCKSAL_CONTAINER_HEALTHCHECK_INTERVAL: 10s # Throttle healthchecks for less syslog entries.
+    DOCKSAL_DNS_DISABLED: 0 # Set 1 for disable docksal DNS container at all.
+    DOCKSAL_DNS_UPSTREAM: 1.1.1.1 # Use CloudFlare DNS as its faster than google's DNS.
+
+#### Applications and packages #################################################
 apps:
-  # Settings for /etc/dnf/dnf.conf
-  dnf_config:
-    defaultyes: 'True' # Set default dnf answer to "Y".
+  jetbrains_toolbox:
+    install: yes
 
-  # List of 3rd party apt repos to add.
-  repos:
-    docker-ce:
-      url: https://download.docker.com/linux/fedora/docker-ce.repo
+  visual_studio_code:
+    install: yes
+    extensions:
+      - acarreiro.calculate                  # Calculates inline math expr
+      - amazonwebservices.aws-toolkit-vscode # AWS toolkit
+      - christian-kohler.path-intellisense   # File path autocomplete
+      - coenraads.bracket-pair-colorizer     # Bracket Pair Colorizer
+      - dakara.transformer                   # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
+      - editorconfig.editorconfig            # EditorConfig support
+      - esbenp.prettier-vscode               # Prettier - Code formatter
+      - golang.go                            # Golang support
+      - hookyqr.beautify                     # HTML/JSON beautifier
+      - mhutchie.git-graph                   # Git graph
+      - mikestead.dotenv                     # .env support
+      - ms-azuretools.vscode-docker          # Docker support
+      - ms-python.python                     # Python support
+      - ms-vscode-remote.remote-ssh          # SSH support 
+      - redhat.ansible                       # Ansible support
+      - tommasov.hosts                       # Hosts file syntax highlighter
+      - tyriar.lorem-ipsum                   # Lorem Ipsum generator
+      - william-voyek.vscode-nginx           # nginx.conf support
+      - yzhang.markdown-all-in-one           # Markdown tools
+      #- alefragnani.Bookmarks               # Bookmarks
+      #- TabNine.tabnine-vscode              # AI-assisted autocomplete
+    
+      # Node/NPM/Yarn specific extensions
+      - christian-kohler.npm-intellisense # NPM better autocomplete
+      - dbaeumer.vscode-eslint            # Eslint support
+      - mariusschulz.yarn-lock-syntax     # yarn.lock syntax highlight
 
-    kubernetes:
-      repo: |
-        [kubernetes]
-        name=Kubernetes
-        baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-        enabled=1
-        gpgcheck=1
-        repo_gpgcheck=1
-        gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
-               https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+      # PHP/Drupal specific extensions
+      - ikappas.composer # Composer support
+      - ikappas.phpcs    # PHP CodeSniffer
 
-    sublime:
-      url: https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
-      gpg: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+      # Themes
+      - github.github-vscode-theme    # GitHub color theme
+      - pkief.material-icon-theme     # Material Icon Theme
+      - rokoroku.vscode-theme-darcula # JetBrains-like theme
 
-  # List of dnf packages to install.
-  dnf:
-    ###> System/CLI apps
-    - cifs-utils   # CIFS driver for NFS mounts
-    - htop         # Terminal system monitor
-    - java-latest-openjdk # Jave development kit
-    - jq           # Takes JSON input and retrieves data by query
-    - mc           # Two panel terminal file manager
-    - mediawriter  # Fedora Media Writer (ISO to USB Flash)
-    - neofetch     # Shows Linux System Information with Distribution Logo
-    - net-tools    # Base network tools
-    - openfortivpn # Corporate VPN open source alternative.
-    - stacer       # Cool CleanMyMac alternative
-    - traceroute   # Traces the route taken by packets over an IPv4/IPv6 network
-    - tree         # Displays an indented directory tree, in color
-
-    ###> Office
-    - libreoffice
-    - libreoffice-help-ru
-    - libreoffice-help-uk
-    - libreoffice-langpack-ru
-    - libreoffice-langpack-uk
-
-    ###> Media/Internet/Office
-    - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    - https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
-    - https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm
-    - https://zoom.us/client/latest/zoom_x86_64.rpm
-
-    - clementine
-    - dia
-    - evolution
-    - evolution-ews
-    - firefox
-    - flameshot
-    - inkscape
-    - transmission
-
-    ###> Developer tools
-    - https://code.visualstudio.com/sha/download?build=stable&os=linux-rpm-x64
-    - '@development-tools' # Build-essentials alternative.
-    - golang
-    - sublime-merge
-    - sublime-text
-    - zeal # Offline documentation viewer
-
-    ###> Gnome-based distro packages.
-    # - gnome-tweaks
-    # - NetworkManager-openvpn
-    # - NetworkManager-openvpn-gnome
-
-    ###> Fonts
-    - https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm # Microsoft Fonts
-    - dejavu-fonts-all
-    - google-roboto-condensed-fonts
-    - google-roboto-fonts
-    - google-roboto-mono-fonts
-    - google-roboto-slab-fonts
-    - jetbrains-mono-fonts-all
-    - open-sans-fonts
-    - sorkintype-merriweather-fonts
-    - sorkintype-merriweather-sans-fonts
-    - typetogether-literata-fonts
-
-    ###> GTK/Icon/Sound themes.
-    - arc-theme
-    - materia-gtk-theme
-    - paper-icon-theme
-    - papirus-icon-theme
-    - yaru-theme
-
+  ### Flatpak's apps (using flathub.org repo)
   flatpak:
     - com.getpostman.Postman # API debugging tool
     - com.github.johnfactotum.Foliate # eBook reader
     - com.slack.Slack
     - com.synology.SynologyDrive # Synology Drive Client
     - com.xnview.XnViewMP
+    - org.flameshot.Flameshot # Screenshot tool
     - org.remmina.Remmina # Remote desktop client (RDP, VNC)
     - org.telegram.desktop # Best IM!
     # - com.discordapp.Discord
@@ -112,129 +138,80 @@ apps:
     # - com.skype.Client
     # - com.spotify.Client
     # - com.viber.Viber # Viber messanger
-    # - org.videolan.VLC
-    # - us.zoom.Zoom # Yeah, I hate it too
 
-docker:
+  # List of *.rpm URLs that needs to be installed.
+  # NOTE: Applicable only to RPM-based distros.
+  rpm_urls:
+    1password: https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm
+    google-chrome: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    teamviewer: https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
+    zoom: https://zoom.us/client/latest/zoom_x86_64.rpm
+
+  # List of packages that needs to be installed.
+  # NOTE: Distro-specific package manager will be used:
+  # - `apt` for debian based
+  # - `yum` for rpm-distros, etc.
+  # Check all the packages are available in your repos before running playbook.
+  packages:
+    ### System/CLI apps
+    - cifs-utils   # Common Internet File System utilities
+    - curl         # Command line tool for transferring data with URL syntax
+    - java-latest-openjdk # Java development kit + Runtime
+    - git          # You know what it is.
+    #- grub-customizer  # GUI for GRUB settings management
+    - htop         # Terminal system monitor
+    - jq           # Takes JSON input and retrieves data by query
+    - mc           # Two panel terminal file manager
+    - neofetch     # Shows Linux System Information with Distribution Logo
+    - net-tools    # Base network tools
+    - openfortivpn # Corporate VPN open source alternative.
+    - stacer       # Cool CleanMyMac alternative
+    - tldr         # Displays simple help pages for command-line tools.
+    - traceroute   # Traces the route taken by packets over an IPv4/IPv6 network
+    - tree         # Displays an indented directory tree, in color
+    ### Archive formats support
+    - p7zip        # 7z and 7za file archivers with high compression ratio
+    - zip          # zip archiver
+    ### Development tools
+    - '@Development Tools'
+    - zeal # Offline documentation viewer
+    ### Office
+    - libreoffice
+    - libreoffice-help-en     # Help: English
+    - libreoffice-help-ru     # Help: Russian
+    - libreoffice-langpack-ru # Localization: Russian
+    - libreoffice-langpack-uk # Localization: Ukrainian
+    ### Media/Internet/Office
+    - clementine           # Audio/Radio/Podcasts player
+    - dia                  # Diagram editor
+    - evolution            # Outlook alternative
+    - evolution-ews        # Evolution Exchange support
+    - ffmpeg               # Universal media transcoder tool
+    - inkscape             # Vector image editor
+    - transmission         # Torrent client
+    ### Gnome-based distro packages.
+    # - gnome-tweaks
+    # - NetworkManager-openvpn
+    # - NetworkManager-openvpn-gnome
+    ### KDE apps
+    #- kompare  # File difference viewer
+    #- krename  # Batch renamer for KDE
+    #- krusader # Two-panel file manager
+    #- okular   # Universal document viewer
+    #- yakuake  # Quake-style dropdown terminal
+
+#### Google fonts to install ###################################################
+google_fonts:
   install: yes
-  docksal:
-    install: yes
-    settings:
-      DOCKSAL_CONTAINER_HEALTHCHECK_INTERVAL: 1m # Throttle healthchecks for less syslog entries.
-      DOCKSAL_DNS_DISABLED: 0 # Set 1 for disable docksal DNS container at all.
-      DOCKSAL_DNS_UPSTREAM: 1.1.1.1 # Use CloudFlare DNS as its faster than google's DNS.
-
-php:
-  install: yes
-  composer:
-    # List of global composer packages to install.
-    global:
-      - drush/drush
-      - squizlabs/php_codesniffer
-      - drupal/coder              # PHPCS Drupal standards
-      - friendsofphp/php-cs-fixer # PHPCS standard fixer
-      - mglaman/drupal-check      # Drupal static code analysis tool
-
-node:
-  install: yes
-  # List of node versions to install.
-  versions:
-    - 16 # LTS: Current
-    - 14 # LTS: Previous
-    - 12 # LTS: Legacy
-  defaultVersion: node # Latest installed node version.
-  npm:
-    # List of global npm packages to install for default node.
-    global: 
-      - bower
-      - dynamodb-admin # Handy Web-UI for viewing local DynamoDB data
-      - eslint
-      - eslint-config-airbnb
-      - eslint-config-google
-      - eslint-config-standard
-      - eslint-plugin-import
-      - eslint-plugin-jsx-a11y
-      - eslint-plugin-node
-      - eslint-plugin-promise
-      - eslint-plugin-react
-      - eslint-plugin-react-hooks
-      - firebase-tools
-      - flow
-      - flow-bin
-      - gulp
-      - http-server
-      - lsp
-      - snyk
-      - typescript
-      - vscode-css-languageserver-bin
-      - vscode-html-languageserver-bin
-      - yarn
-
-python:
-  install: yes
-  pip3:
-    # List of global packages to install.
-    global:
-      - click            # Handy-dandy module for writing terminal apps.
-      - feedparser       # RSS parser.
-      - ffmpeg-normalize # Normalizes audio using ffmpeg.
-      - ffpb             # ffmpeg with progress bar.
-      - yq               # Takes YAML input and retrieves data by query.
-
-vscode:
-  install: yes
-  # List of plugins to install.
-  extensions:
-    - amazonwebservices.aws-toolkit-vscode # AWS toolkit
-    - acarreiro.calculate                # Calculates inline math expr
-    - christian-kohler.path-intellisense # File path autocomplete
-    - coenraads.bracket-pair-colorizer   # Bracket Pair Colorizer
-    - dakara.transformer                 # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
-    - editorconfig.editorconfig          # EditorConfig support
-    - esbenp.prettier-vscode             # Prettier - Code formatter
-    - golang.go                          # Golang support
-    - hookyqr.beautify                   # HTML/JSON beautifier
-    - mhutchie.git-graph                 # Git graph
-    - mikestead.dotenv                   # .env support
-    - ms-azuretools.vscode-docker        # Docker support
-    - ms-python.python                   # Python support
-    - ms-vscode-remote.remote-ssh        # SSH support 
-    #- TabNine.tabnine-vscode            # AI-assisted autocomplete
-    - tyriar.lorem-ipsum                 # Lorem Ipsum generator
-    - tommasov.hosts                     # Hosts file syntax highlighter.
-    - william-voyek.vscode-nginx         # nginx.conf support
-    - yzhang.markdown-all-in-one         # Markdown tools
-    #- alefragnani.Bookmarks             # Bookmarks
-
-    # Node/NPM/Yarn specific extensions
-    - christian-kohler.npm-intellisense # NPM better autocomplete
-    - dbaeumer.vscode-eslint            # Eslint support
-    - mariusschulz.yarn-lock-syntax     # yarn.lock syntax highlight
-    # PHP/Drupal specific extensions
-    - ikappas.composer         # Composer support
-    - ikappas.phpcs            # PHP CodeSniffer
-
-    # Themes
-    - github.github-vscode-theme         # GitHub color theme
-    - pkief.material-icon-theme          # Material Icon Theme
-    - rokoroku.vscode-theme-darcula      # JetBrains-like theme.
-jetbrains:
-  toolbox:
-    install: yes
-
-cloud:
-  aws: # AWS CLI v2
-    install: yes
-  google-cloud-sdk:
-    install: yes
-    packages:
-      - google-cloud-sdk
-      - google-cloud-sdk-minikube
-      - google-cloud-sdk-firestore-emulator
-
-  kubernetes:
-    install: yes
-    packages:
-      - kubeadm
-      - kubectl
-      - kubelet
+  fonts_dir: '{{ ansible_env.HOME }}/.fonts'
+  fonts_list:
+    - jetbrains-mono
+    - open-sans
+    - open-sans-condensed
+    - roboto
+    - roboto-condensed
+    - roboto-mono
+    - roboto-slab
+    - ubuntu
+    - ubuntu-condensed
+    - ubuntu-mono

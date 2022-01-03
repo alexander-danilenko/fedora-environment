@@ -1,0 +1,10 @@
+---
+# Configuration that will be set in /etc/sysctl.conf
+sysctl_config:
+  # Extend Inotify Watches Limit.
+  # @see https://bit.ly/30PmSLL
+  'fs.inotify.max_user_watches': 524288
+
+  # Extend virtual memory for elastic search.
+  # @see https://bit.ly/3xgGfJS
+  'vm.max_map_count': 262144

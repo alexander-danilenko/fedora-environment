@@ -1,0 +1,20 @@
+- name: 'Make sure flatpak package is installed'
+  become: yes
+  package:
+    name: flatpak
+    state: present
+
+- name: 'Make sure Flathub repo is added'
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: 'Install Flatpak packages'
+  loop: '{{ apps_flatpak_packages }}'
+  flatpak:
+    name:  '{{ item }}'
+    state: present
+    remote: flathub
+    method: user
