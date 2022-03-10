@@ -44,6 +44,7 @@ node:
     - vscode-css-languageserver-bin
     - vscode-html-languageserver-bin
     - yarn
+    - @nestjs/cli
 
 #### Cloud tools and utils. ####################################################
 cloud:
