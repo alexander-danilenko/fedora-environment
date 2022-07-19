@@ -41,6 +41,7 @@
     #### Code Editors and IDEs. ################################################
     - role: vendor/roles/jetbrains-toolbox
       when: apps.jetbrains_toolbox.install|bool
+      become: true
       tags: [ide, jetbrains, jetbrains-toolbox]
 
     - role: vendor/roles/visual-studio-code
