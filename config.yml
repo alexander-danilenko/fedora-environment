@@ -195,7 +195,7 @@ google_fonts:
   install: yes
   fonts_dir: '{{ ansible_env.HOME }}/.fonts'
   fonts_list:
-    - jetbrains-mono
+    #- jetbrains-mono
     - open-sans
     - ubuntu
     - ubuntu-mono
