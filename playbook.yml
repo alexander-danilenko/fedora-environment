@@ -56,17 +56,6 @@
       when: cloud.aws_cli.install|bool
       tags: [cloud, aws, aws-cli]
 
-    - role: vendor/roles/google-cloud-sdk
-      # RedHat derivative distros does not support this role.
-      when: cloud.gcloud.install|bool and ansible_facts["os_family"]  != 'RedHat'
-      vars:
-        gcloud_version: '{{ cloud.gcloud.version }}'
-        gcloud_install_from_package_manager: false
-        gcloud_install_dir: '/.gcp' # Installs SDK to '$HOME/.gcp/google-cloud-sdk'
-        gcloud_additional_components: '{{ cloud.gcloud.components }}'
-        gcloud_prefer_python3: true
-      tags: [cloud, gcloud, google-cloud]
-
     #### Docker things. ########################################################
     - role: vendor/roles/docker
       vars:

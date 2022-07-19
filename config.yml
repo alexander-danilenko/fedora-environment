@@ -2,26 +2,28 @@
 python3:
   install: yes
   pip3_global_packages:
+    - awsebcli         # AWS Elastic Beanstalk CLI. 
     - click            # Handy-dandy module for writing terminal apps.
     - feedparser       # RSS parser.
     - ffmpeg-normalize # Normalizes audio using ffmpeg.
     - ffpb             # ffmpeg with progress bar.
     - yq               # Takes YAML input and retrieves data by query.
+    - yt-dlp           # Advanced fork of youtube-dl.
 
 php:
   install: yes
   composer_global_packages: # NOTE: Packages will be installed using `consolidation/cgr`.
     - drush/drush
     - squizlabs/php_codesniffer
-    - drupal/coder              # PHPCS Drupal standards
-    - friendsofphp/php-cs-fixer # PHPCS standard fixer
-    - mglaman/drupal-check      # Drupal static code analysis tool
+    #- drupal/coder              # PHPCS Drupal standards
+    #- friendsofphp/php-cs-fixer # PHPCS standard fixer
 
 node:
   install: yes
   version: 16 # LTS
   npm_global_packages: 
-    - bower
+    - '@nestjs/cli' # Nest.JS CLI
+    - contentful-cli # Contentful.com CLI
     - dynamodb-admin # Handy Web-UI for viewing local DynamoDB data
     - eslint
     - eslint-config-airbnb
@@ -37,33 +39,18 @@ node:
     - flow
     - flow-bin
     - gulp
-    - http-server
+    - http-server # Simple HTTP server for static files in directory
     - lsp
-    - snyk
+    - snyk # snyk.com CLI
     - typescript
     - vscode-css-languageserver-bin
     - vscode-html-languageserver-bin
-    - yarn
-    - @nestjs/cli
 
 #### Cloud tools and utils. ####################################################
 cloud:
   # AWS CLI v2
   aws_cli:
     install: yes
-
-  ### @TODO: Add gcloud support.
-  # # Google Cloud SDK
-  # gcloud: 
-  #   install: yes
-  #   version: '367.0.0'
-  #   components:
-  #     - cloud-datastore-emulator
-  #     - cloud-firestore-emulator
-  #     - pubsub-emulator
-  #     - cloud-build-local
-  #     - kubectl
-  #     - minikube
 
 #### Docker things. ############################################################
 # Docker Community Edition
@@ -90,12 +77,13 @@ apps:
       - acarreiro.calculate                  # Calculates inline math expr
       - amazonwebservices.aws-toolkit-vscode # AWS toolkit
       - christian-kohler.path-intellisense   # File path autocomplete
-      - coenraads.bracket-pair-colorizer     # Bracket Pair Colorizer
       - dakara.transformer                   # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
       - editorconfig.editorconfig            # EditorConfig support
       - esbenp.prettier-vscode               # Prettier - Code formatter
+      - GitHub.copilot                       # GitHub Copilot!
       - golang.go                            # Golang support
       - hookyqr.beautify                     # HTML/JSON beautifier
+      - LeetCode.vscode-leetcode             # Leetcode.com plugin
       - mhutchie.git-graph                   # Git graph
       - mikestead.dotenv                     # .env support
       - ms-azuretools.vscode-docker          # Docker support
@@ -130,7 +118,7 @@ apps:
     - com.slack.Slack
     - com.synology.SynologyDrive # Synology Drive Client
     - com.xnview.XnViewMP
-    - org.flameshot.Flameshot # Screenshot tool
+    - org.flameshot.Flameshot # Screenshot tool. @TODO: Replace with Deepin Screenshot.
     - org.remmina.Remmina # Remote desktop client (RDP, VNC)
     - org.telegram.desktop # Best IM!
     # - com.discordapp.Discord
@@ -209,11 +197,5 @@ google_fonts:
   fonts_list:
     - jetbrains-mono
     - open-sans
-    - open-sans-condensed
-    - roboto
-    - roboto-condensed
-    - roboto-mono
-    - roboto-slab
     - ubuntu
-    - ubuntu-condensed
     - ubuntu-mono

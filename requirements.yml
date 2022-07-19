@@ -10,9 +10,6 @@ roles:
   - name: docksal
     src: https://github.com/alexander-danilenko/ansible-role-docksal
 
-  - name: google-cloud-sdk
-    src: markosamuli.gcloud
-
   - name: google-fonts
     src: https://github.com/alexander-danilenko/ansible-role-google-fonts
 
