@@ -11,8 +11,9 @@
 
 > This repo contains [Ansible](https://www.ansible.com/) playbook for fast and easy DevOps and Web Developer's Linux environment setup on [Fedora](https://getfedora.org/) and all its spins.
 
-## TLDR
+## TL;DR
 
+0. `sudo dnf install git ansible`
 1. Adjust [`config.yml`](config.yml) for your needs
 2. Run `./install` script
 3. Let the ansible to do the magic
