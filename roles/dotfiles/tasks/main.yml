@@ -12,7 +12,7 @@
     path: '{{ item }}'
 
 - name: 'Make sure rsync is installed'
-  become: yes
+  become: true
   package:
     state: present
     name: 'rsync'
@@ -21,7 +21,7 @@
   synchronize:
     src: '{{ role_path }}/files/'
     dest: '{{ ansible_env.HOME }}'
-    recursive: yes
+    recursive: true
     compress: no
     rsync_opts:
       - '--exclude=.git'

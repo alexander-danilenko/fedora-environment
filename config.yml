@@ -1,6 +1,16 @@
+fish:
+  install: true
+  set_default: true
+  theme: lambda
+  packages:
+    - https://github.com/edc/bass
+    - https://github.com/derekstavis/plugin-nvm
+    - https://github.com/oh-my-fish/plugin-aws
+    - https://github.com/evanlucas/fish-kubectl-completions
+
 #### Languages and interpreters. ###############################################
 python3:
-  install: yes
+  install: true
   pip3_global_packages:
     - awsebcli         # AWS Elastic Beanstalk CLI. 
     - click            # Handy-dandy module for writing terminal apps.
@@ -11,7 +21,7 @@ python3:
     - yt-dlp           # Advanced fork of youtube-dl.
 
 php:
-  install: yes
+  install: true
   composer_global_packages: # NOTE: Packages will be installed using `consolidation/cgr`.
     - drush/drush
     - squizlabs/php_codesniffer
@@ -19,8 +29,8 @@ php:
     #- friendsofphp/php-cs-fixer # PHPCS standard fixer
 
 node:
-  install: yes
-  version: 16 # LTS
+  install: true
+  version: 18 # LTS
   npm_global_packages: 
     - '@nestjs/cli' # Nest.JS CLI
     - contentful-cli # Contentful.com CLI
@@ -46,21 +56,22 @@ node:
     - vscode-css-languageserver-bin
     - vscode-html-languageserver-bin
 
+
 #### Cloud tools and utils. ####################################################
 cloud:
   # AWS CLI v2
   aws_cli:
-    install: yes
+    install: true
 
 #### Docker things. ############################################################
 # Docker Community Edition
 docker:
-  install: yes
+  install: true
 
 # Docker Compose-based all-purpose web-development environment.
 # @see https://docksal.io/
 docksal:
-  install: yes
+  install: true
   config:
     DOCKSAL_CONTAINER_HEALTHCHECK_INTERVAL: 10s # Throttle healthchecks for less syslog entries.
     DOCKSAL_DNS_DISABLED: 0 # Set 1 for disable docksal DNS container at all.
@@ -69,10 +80,10 @@ docksal:
 #### Applications and packages #################################################
 apps:
   jetbrains_toolbox:
-    install: yes
+    install: true
 
   visual_studio_code:
-    install: yes
+    install: true
     extensions:
       - acarreiro.calculate                  # Calculates inline math expr
       - amazonwebservices.aws-toolkit-vscode # AWS toolkit
@@ -113,15 +124,15 @@ apps:
 
   ### Flatpak's apps (using flathub.org repo)
   flatpak:
-    - com.getpostman.Postman # API debugging tool
-    - com.github.johnfactotum.Foliate # eBook reader
-    - com.slack.Slack
+    - app.resp.RESP # Redis GUI client
+    #- com.discordapp.Discord
+    #- com.getpostman.Postman # API debugging tool
+    #- com.slack.Slack
     - com.synology.SynologyDrive # Synology Drive Client
     - com.xnview.XnViewMP
-    - org.flameshot.Flameshot # Screenshot tool. @TODO: Replace with Deepin Screenshot.
     - org.remmina.Remmina # Remote desktop client (RDP, VNC)
-    - org.telegram.desktop # Best IM!
-    # - com.discordapp.Discord
+    #- org.telegram.desktop # Best IM!
+    #- us.zoom.Zoom
     # - com.microsoft.Teams
     # - com.rafaelmardojai.Blanket # Listen to different sounds
     # - com.skype.Client
@@ -177,7 +188,10 @@ apps:
     - evolution            # Outlook alternative
     - evolution-ews        # Evolution Exchange support
     - ffmpeg               # Universal media transcoder tool
+    - flameshot
+    - foliate              # Simple and modern GTK eBook reader
     - inkscape             # Vector image editor
+    - telegram-desktop     # Best IM!
     - transmission         # Torrent client
     ### Gnome-based distro packages.
     # - gnome-tweaks
@@ -189,13 +203,3 @@ apps:
     #- krusader # Two-panel file manager
     #- okular   # Universal document viewer
     #- yakuake  # Quake-style dropdown terminal
-
-#### Google fonts to install ###################################################
-google_fonts:
-  install: yes
-  fonts_dir: '{{ ansible_env.HOME }}/.fonts'
-  fonts_list:
-    #- jetbrains-mono
-    - open-sans
-    - ubuntu
-    - ubuntu-mono

@@ -1,7 +1,7 @@
 ---
 
 - name: 'Configure sysctl'
-  become: yes
+  become: true
   loop: '{{ sysctl_config | default({}) | dict2items }}'
   lineinfile:
     path: /etc/sysctl.conf
@@ -12,7 +12,7 @@
     - sysctl
 
 - name: 'Read new values from sysctl.conf'
-  become: yes
+  become: true
   when: sysctl.changed
   shell: 'sysctl -p'
   args:

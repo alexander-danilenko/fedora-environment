@@ -1,7 +1,7 @@
 ---
 - hosts: 127.0.0.1
   connection: local
-  gather_facts: yes # Run gather_facts to define ansible_env.HOME
+  gather_facts: true # Run gather_facts to define ansible_env.HOME
   vars_files:
     - ./config.yml
 
@@ -9,13 +9,13 @@
     #### System and terminal-related changes. ##################################
     - role: roles/sysctl
     - role: roles/dotfiles
-    - role: vendor/roles/zsh
-    - role: vendor/roles/google-fonts
-      when: google_fonts.install|bool and google_fonts.fonts_list|length > 0
+    - role: vendor/roles/fish
+      when: fish.install|bool
       vars:
-        google_fonts_install_dir: '{{ google_fonts.fonts_dir }}'
-        google_fonts_list: '{{ google_fonts.fonts_list }}'
-      tags: [fonts]
+        fish_set_as_default_shell: '{{ fish.set_default|bool }}'
+        omf_theme: '{{ fish.theme }}'
+        omf_packages: '{{ fish.packages }}'
+      tags: [fish]
 
     #### Languages and interpreters. ###########################################
     - role: vendor/roles/node
@@ -74,10 +74,10 @@
     # the very end of the playbook to make sure that all the rest is fine.
 
     - role: vendor/roles/rpmfusion
-      become: yes
+      become: true
       vars:
-        rpmfusion_free: yes
-        rpmfusion_nonfree: yes
+        rpmfusion_free: true
+        rpmfusion_nonfree: true
       tags: [apps, rpmfusion]
 
     - role: roles/apps

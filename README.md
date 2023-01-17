@@ -57,7 +57,7 @@ sudo dnf install git ansible
 ## 🐧 Distro compatibility
 
 <p>
-  <img alt="Fedora" src="https://img.shields.io/badge/Fedora-36-green.svg?style=for-the-badge" /><br/>
+  <img alt="Fedora" src="https://img.shields.io/badge/Fedora-37-green.svg?style=for-the-badge" /><br/>
 </p>
 
 ### <img src="https://cdn.svgporn.com/logos/debian.svg" height="16" /> What about Debian-based distros like <img src="https://cdn.svgporn.com/logos/ubuntu.svg" height="16" /> Ubuntu?

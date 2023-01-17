@@ -1,5 +1,5 @@
 - name: 'Update dnf config'
-  become: yes
+  become: true
   loop: '{{ apps_dnf_config | default({}) | dict2items }}'
   lineinfile:
     path: /etc/dnf/dnf.conf
@@ -13,7 +13,6 @@
     mode: '0755'
 
 - name: 'Download *.rpm files by URLs'
-  when: 
   loop: '{{ apps_rpm_urls | default({}) | dict2items }}'
   get_url:
     url: '{{ item.value }}'
@@ -21,18 +20,18 @@
     mode: '0755'
 
 - name: 'Install all *.rpm files from {{ apps_rpm_dir }}'
-  become: yes
+  become: true
   dnf:
     name: "{{ lookup('fileglob', '{{ apps_rpm_dir }}/*.rpm') }}"
     state: present
     disable_gpg_check: true
 
 - name: 'Install dnf packages'
-  become: yes
+  become: true
   dnf:
     name: '{{ apps_packages }}'
     state: 'present'
-    update_cache: yes
+    update_cache: true
 
 - name: 'Flatpak tasks'
   when: apps_flatpak_packages | length > 0

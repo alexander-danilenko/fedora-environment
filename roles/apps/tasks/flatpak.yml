@@ -1,5 +1,5 @@
 - name: 'Make sure flatpak package is installed'
-  become: yes
+  become: true
   package:
     name: flatpak
     state: present
