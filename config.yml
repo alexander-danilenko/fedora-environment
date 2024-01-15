@@ -188,9 +188,11 @@ apps:
     - evolution            # Outlook alternative
     - evolution-ews        # Evolution Exchange support
     - ffmpeg               # Universal media transcoder tool
-    - flameshot
+    - flameshot            # Powerful and simple to use screenshot software
     - foliate              # Simple and modern GTK eBook reader
     - inkscape             # Vector image editor
+    - libheif-freeworld    # Apple HEVC support for HEIF and AVIF file format decoder and encoder
+    - libheif-tools        # Tools for manipulating HEIF files
     - telegram-desktop     # Best IM!
     - transmission         # Torrent client
     ### Gnome-based distro packages.
