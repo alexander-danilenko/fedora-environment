@@ -173,9 +173,11 @@ apps:
     - p7zip         # 7z and 7za file archivers with high compression ratio
     - p7zip-plugins # Additional plugins for p7zip
     - zip           # zip archiver
-    ### Development tools
+    ### Development
     - '@Development Tools'
-    - zeal # Offline documentation viewer
+    - conda                   # Python-agnostic package manager
+    - python3-virtualenv      # Tool to create isolated Python environments
+    - zeal                    # Offline documentation viewer
     ### Office
     - libreoffice
     - libreoffice-help-en     # Help: English
