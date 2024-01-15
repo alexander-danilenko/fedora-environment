@@ -191,6 +191,7 @@ apps:
     - flameshot            # Powerful and simple to use screenshot software
     - foliate              # Simple and modern GTK eBook reader
     - inkscape             # Vector image editor
+    - kiwix-desktop        # Offline Wikipedia downloader/viewer
     - libheif-freeworld    # Apple HEVC support for HEIF and AVIF file format decoder and encoder
     - libheif-tools        # Tools for manipulating HEIF files
     - telegram-desktop     # Best IM!
