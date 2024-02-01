@@ -8,3 +8,6 @@ sysctl_config:
   # Extend virtual memory for elastic search.
   # @see https://bit.ly/3xgGfJS
   'vm.max_map_count': 262144
+
+  # @see https://www.cyberciti.biz/tips/linux-increase-outgoing-network-sockets-range.html
+  'net.ipv4.ip_local_port_range': '16384 65535'
