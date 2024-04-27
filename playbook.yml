@@ -8,9 +8,14 @@
   roles:
     #### System and terminal-related changes. ##################################
     - role: roles/sysctl
+      # Do not run sysctl in check mode.
+      # `sysctl` requires low-level access to kernel and is not a thing for a docker container.
+      when: not ansible_check_mode
+
     - role: roles/dotfiles
+
     - role: vendor/roles/fish
-      when: fish.install|bool
+      when: fish.install|bool and not ansible_check_mode
       vars:
         fish_set_as_default_shell: '{{ fish.set_default|bool }}'
         omf_theme: '{{ fish.theme }}'
@@ -19,21 +24,21 @@
 
     #### Languages and interpreters. ###########################################
     - role: vendor/roles/node
-      when: node.install|bool
+      when: node.install|bool and not ansible_check_mode
       vars:
         nvm_node_version: '{{ node.version }}'
         nvm_npm_global_packages: '{{ node.npm_global_packages }}'
       tags: [node, nvm, npm]
 
     - role: roles/python3
-      when: python3.install|bool
+      when: python3.install|bool and not ansible_check_mode
       vars:
         python3_version: '{{ python3.version }}'
         python3_pip3_global_packages: '{{ python3.pip3_global_packages }}'
       tags: [python, python3, pip3, pip]
 
     - role: vendor/roles/php-composer
-      when: php.install|bool
+      when: php.install|bool and not ansible_check_mode
       vars:
         php_composer_global_packages: '{{ php.composer_global_packages }}'
       tags: [php, composer]
@@ -55,12 +60,12 @@
 
     #### Code Editors and IDEs. ################################################
     - role: vendor/roles/jetbrains-toolbox
-      when: apps.jetbrains_toolbox.install|bool
+      when: apps.jetbrains_toolbox.install|bool and not ansible_check_mode
       become: true
       tags: [ide, jetbrains, jetbrains-toolbox]
 
     - role: vendor/roles/visual-studio-code
-      when: apps.visual_studio_code.install|bool
+      when: apps.visual_studio_code.install|bool and not ansible_check_mode
       vars:
         users:
           - username: '{{ ansible_env.USER }}'
@@ -69,18 +74,18 @@
 
     #### Cloud tools and utils. ################################################
     - role: vendor/roles/aws-cli
-      when: cloud.aws_cli.install|bool
+      when: cloud.aws_cli.install|bool and not ansible_check_mode
       tags: [cloud, aws, aws-cli]
 
     #### Docker things. ########################################################
     - role: vendor/roles/docker
-      when: docker.install|bool
+      when: docker.install|bool and not ansible_check_mode
       vars:
         docker_channel: stable
       tags: [docker]
 
     - role: vendor/roles/docksal
-      when: docker.install|bool and docksal.install|bool
+      when: docker.install|bool and docksal.install|bool and not ansible_check_mode
       vars:
         docksal_global_config: '{{ docksal.config }}'
       tags: [docksal]

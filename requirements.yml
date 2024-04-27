@@ -5,7 +5,8 @@ roles:
     src: deekayen.awscli2
 
   - name: docker
-    src: https://github.com/haxorof/ansible-role-docker-ce
+    src: haxorof.docker_ce
+    #src: https://github.com/haxorof/ansible-role-docker-ce
 
   - name: docksal
     src: https://github.com/alexander-danilenko/ansible-role-docksal

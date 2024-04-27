@@ -1,0 +1,36 @@
+name: Ansible Playbook Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test on ${{ matrix.container }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # List of Docker images to test against.
+        container:
+          - 'fedora:40'
+          - 'fedora:39'
+          - 'fedora:38'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: "Run playbook on ${{ matrix.container }}"
+      uses: addnab/docker-run-action@v3
+      with:
+        image: "${{ matrix.container }}"
+        options: -v ${{ github.workspace }}:/work --privileged  # This might be necessary for some Docker operations.
+        run: |
+          dnf install -y ansible curl git-all rsync flatpak
+          cd /work
+          ./test

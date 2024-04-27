@@ -125,13 +125,13 @@ apps:
     - com.synology.SynologyDrive # Synology Drive Client
     - com.xnview.XnViewMP # Image viewer
     - org.remmina.Remmina # Remote desktop client (RDP, VNC)
+    - org.telegram.desktop # Best IM!
     # - com.microsoft.Teams
     # - com.rafaelmardojai.Blanket # Listen to different sounds
     # - com.skype.Client
     # - com.spotify.Client
     # - com.viber.Viber # Viber messanger
     # - com.discordapp.Discord
-    # - org.telegram.desktop # Best IM!
     # - us.zoom.Zoom
 
   # List of *.rpm URLs that needs to be installed.
@@ -178,14 +178,13 @@ apps:
     - dia               # Diagram editor
     - evolution         # Outlook alternative
     - evolution-ews     # Evolution Exchange support
-    - ffmpeg            # Universal media transcoder tool
+    - ffmpeg-free       # Universal media transcoder tool
     - flameshot         # Powerful and simple to use screenshot software
     - foliate           # Simple and modern GTK eBook reader
     - inkscape          # Vector image editor
     - kiwix-desktop     # Offline Wikipedia downloader/viewer
-    - libheif-freeworld # Apple HEVC support for HEIF and AVIF file format decoder and encoder
+    #- libheif-freeworld # Apple HEVC support for HEIF and AVIF file format decoder and encoder
     - libheif-tools     # Tools for manipulating HEIF files
-    - telegram-desktop  # Best IM!
     - transmission      # Torrent client
     ### Gnome-based distro packages.
     # - gnome-tweaks
