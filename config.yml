@@ -17,6 +17,7 @@ python3:
     - feedparser       # RSS parser.
     - ffmpeg-normalize # Normalizes audio using ffmpeg.
     - ffpb             # ffmpeg with progress bar.
+    - pipenv           # Python Dev Workflow for Humans.
     - yq               # Takes YAML input and retrieves data by query.
     - yt-dlp           # Advanced fork of youtube-dl.
 
