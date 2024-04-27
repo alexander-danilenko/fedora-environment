@@ -87,37 +87,30 @@ apps:
   visual_studio_code:
     install: true
     extensions:
+      - GitHub.copilot                       # GitHub Copilot!
       - acarreiro.calculate                  # Calculates inline math expr
-      - amazonwebservices.aws-toolkit-vscode # AWS toolkit
       - christian-kohler.path-intellisense   # File path autocomplete
       - dakara.transformer                   # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
+      - dotenv.dotenv-vscode                 # .env support
       - editorconfig.editorconfig            # EditorConfig support
       - esbenp.prettier-vscode               # Prettier - Code formatter
-      - GitHub.copilot                       # GitHub Copilot!
       - golang.go                            # Golang support
-      - hookyqr.beautify                     # HTML/JSON beautifier
-      - LeetCode.vscode-leetcode             # Leetcode.com plugin
       - mhutchie.git-graph                   # Git graph
-      - mikestead.dotenv                     # .env support
       - ms-azuretools.vscode-docker          # Docker support
       - ms-python.python                     # Python support
-      - ms-vscode-remote.remote-ssh          # SSH support 
-      - redhat.ansible                       # Ansible support
+      - ms-vscode-remote.remote-ssh          # SSH support
       - tommasov.hosts                       # Hosts file syntax highlighter
       - tyriar.lorem-ipsum                   # Lorem Ipsum generator
       - william-voyek.vscode-nginx           # nginx.conf support
       - yzhang.markdown-all-in-one           # Markdown tools
-      #- alefragnani.Bookmarks               # Bookmarks
+      #- LeetCode.vscode-leetcode             # Leetcode.com plugin
       #- TabNine.tabnine-vscode              # AI-assisted autocomplete
-    
+      #- alefragnani.Bookmarks               # Bookmarks
+      #- redhat.ansible                       # Ansible support
+
       # Node/NPM/Yarn specific extensions
       - christian-kohler.npm-intellisense # NPM better autocomplete
       - dbaeumer.vscode-eslint            # Eslint support
-      - mariusschulz.yarn-lock-syntax     # yarn.lock syntax highlight
-
-      # PHP/Drupal specific extensions
-      - ikappas.composer # Composer support
-      - ikappas.phpcs    # PHP CodeSniffer
 
       # Themes
       - github.github-vscode-theme    # GitHub color theme
@@ -126,49 +119,44 @@ apps:
 
   ### Flatpak's apps (using flathub.org repo)
   flatpak:
+    - com.getpostman.Postman # API debugging tool
     - com.redis.RedisInsight # Redis GUI client
-    #- com.discordapp.Discord
-    #- com.getpostman.Postman # API debugging tool
-    #- com.slack.Slack
+    - com.slack.Slack # Slack messenger
     - com.synology.SynologyDrive # Synology Drive Client
-    - com.xnview.XnViewMP
+    - com.xnview.XnViewMP # Image viewer
     - org.remmina.Remmina # Remote desktop client (RDP, VNC)
-    #- org.telegram.desktop # Best IM!
-    #- us.zoom.Zoom
     # - com.microsoft.Teams
     # - com.rafaelmardojai.Blanket # Listen to different sounds
     # - com.skype.Client
     # - com.spotify.Client
     # - com.viber.Viber # Viber messanger
+    # - com.discordapp.Discord
+    # - org.telegram.desktop # Best IM!
+    # - us.zoom.Zoom
 
   # List of *.rpm URLs that needs to be installed.
   # NOTE: Applicable only to RPM-based distros.
   rpm_urls:
     1password: https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm
     google-chrome: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    teamviewer: https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
+    #teamviewer: https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
     zoom: https://zoom.us/client/latest/zoom_x86_64.rpm
 
   # List of packages that needs to be installed.
-  # NOTE: Distro-specific package manager will be used:
-  # - `apt` for debian based
-  # - `yum` for rpm-distros, etc.
-  # Check all the packages are available in your repos before running playbook.
   packages:
     ### System/CLI apps
     - cifs-utils   # Common Internet File System utilities
     - curl         # Command line tool for transferring data with URL syntax
     - java-latest-openjdk # Java development kit + Runtime
-    - git          # You know what it is.
-    #- grub-customizer  # GUI for GRUB settings management
+    - git          # You know what it is
     - htop         # Terminal system monitor
     - jq           # Takes JSON input and retrieves data by query
     - mc           # Two panel terminal file manager
     - neofetch     # Shows Linux System Information with Distribution Logo
     - net-tools    # Base network tools
-    - openfortivpn # Corporate VPN open source alternative.
+    #- openfortivpn # Corporate VPN open source alternative
     - stacer       # Cool CleanMyMac alternative
-    - tldr         # Displays simple help pages for command-line tools.
+    - tldr         # Displays simple help pages for command-line tools
     - traceroute   # Traces the route taken by packets over an IPv4/IPv6 network
     - tree         # Displays an indented directory tree, in color
     ### Archive formats support
@@ -176,9 +164,9 @@ apps:
     - p7zip-plugins # Additional plugins for p7zip
     - zip           # zip archiver
     ### Development
-    - '@Development Tools'
-    - conda                   # Python-agnostic package manager
-    - zeal                    # Offline documentation viewer
+    - '@Development Tools' # Base development tools
+    - conda                # Python-agnostic package manager
+    - zeal                 # Offline documentation viewer
     ### Office
     - libreoffice
     - libreoffice-help-en     # Help: English
@@ -186,19 +174,19 @@ apps:
     - libreoffice-langpack-ru # Localization: Russian
     - libreoffice-langpack-uk # Localization: Ukrainian
     ### Media/Internet/Office
-    - clementine           # Audio/Radio/Podcasts player
-    - dia                  # Diagram editor
-    - evolution            # Outlook alternative
-    - evolution-ews        # Evolution Exchange support
-    - ffmpeg               # Universal media transcoder tool
-    - flameshot            # Powerful and simple to use screenshot software
-    - foliate              # Simple and modern GTK eBook reader
-    - inkscape             # Vector image editor
-    - kiwix-desktop        # Offline Wikipedia downloader/viewer
-    - libheif-freeworld    # Apple HEVC support for HEIF and AVIF file format decoder and encoder
-    - libheif-tools        # Tools for manipulating HEIF files
-    - telegram-desktop     # Best IM!
-    - transmission         # Torrent client
+    - clementine        # Audio/Radio/Podcasts player
+    - dia               # Diagram editor
+    - evolution         # Outlook alternative
+    - evolution-ews     # Evolution Exchange support
+    - ffmpeg            # Universal media transcoder tool
+    - flameshot         # Powerful and simple to use screenshot software
+    - foliate           # Simple and modern GTK eBook reader
+    - inkscape          # Vector image editor
+    - kiwix-desktop     # Offline Wikipedia downloader/viewer
+    - libheif-freeworld # Apple HEVC support for HEIF and AVIF file format decoder and encoder
+    - libheif-tools     # Tools for manipulating HEIF files
+    - telegram-desktop  # Best IM!
+    - transmission      # Torrent client
     ### Gnome-based distro packages.
     # - gnome-tweaks
     # - NetworkManager-openvpn
