@@ -7,6 +7,7 @@
     name:
       - 'python3'
       - 'python3-pip'
+      - 'python3-virtualenv'
 
 - name: 'Install Python pip3 global packages'
   when: python3_pip3_global_packages|length > 0

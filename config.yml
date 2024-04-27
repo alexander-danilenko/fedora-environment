@@ -178,7 +178,6 @@ apps:
     ### Development
     - '@Development Tools'
     - conda                   # Python-agnostic package manager
-    - python3-virtualenv      # Tool to create isolated Python environments
     - zeal                    # Offline documentation viewer
     ### Office
     - libreoffice
