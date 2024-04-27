@@ -38,6 +38,21 @@
         php_composer_global_packages: '{{ php.composer_global_packages }}'
       tags: [php, composer]
 
+    #### Apps install. #########################################################
+    - role: vendor/roles/rpmfusion
+      become: true
+      vars:
+        rpmfusion_free: true
+        rpmfusion_nonfree: true
+      tags: [apps, rpmfusion]
+
+    - role: roles/apps
+      vars:
+        apps_packages: '{{ apps.packages }}'
+        apps_flatpak_packages: '{{ apps.flatpak }}'
+        apps_rpm_urls: '{{ apps.rpm_urls }}'
+      tags: [apps, packages, flatpak]
+
     #### Code Editors and IDEs. ################################################
     - role: vendor/roles/jetbrains-toolbox
       when: apps.jetbrains_toolbox.install|bool
@@ -59,6 +74,7 @@
 
     #### Docker things. ########################################################
     - role: vendor/roles/docker
+      when: docker.install|bool
       vars:
         docker_channel: stable
       tags: [docker]
@@ -68,21 +84,3 @@
       vars:
         docksal_global_config: '{{ docksal.config }}'
       tags: [docksal]
-
-    #### Apps install. #########################################################
-    # Note: it's the most time-consuming process, so it needs to be happening at
-    # the very end of the playbook to make sure that all the rest is fine.
-
-    - role: vendor/roles/rpmfusion
-      become: true
-      vars:
-        rpmfusion_free: true
-        rpmfusion_nonfree: true
-      tags: [apps, rpmfusion]
-
-    - role: roles/apps
-      vars:
-        apps_packages: '{{ apps.packages }}'
-        apps_flatpak_packages: '{{ apps.flatpak }}'
-        apps_rpm_urls: '{{ apps.rpm_urls }}'
-      tags: [apps, packages, flatpak]

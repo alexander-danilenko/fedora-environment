@@ -30,7 +30,7 @@ php:
 
 node:
   install: true
-  version: 18 # LTS
+  version: 20 # LTS
   npm_global_packages: 
     - '@nestjs/cli' # Nest.JS CLI
     - contentful-cli # Contentful.com CLI
@@ -67,6 +67,7 @@ cloud:
 # Docker Community Edition
 docker:
   install: true
+  remove_podman: true
 
 # Docker Compose-based all-purpose web-development environment.
 # @see https://docksal.io/

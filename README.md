@@ -27,6 +27,7 @@ Setting up a new developer's machine can be an ad-hoc, manual, and time-consumin
 
 The following will be installed and configured for you:
 
+- <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Fish-shell-logo-ascii.svg" height="14" /> **fish** shell + [oh-my-fish](https://github.com/oh-my-fish/oh-my-fish)
 - <img src="https://cdn.svgporn.com/logos/nodejs-icon.svg" height="14"> **Node.JS** (via [node version manager](https://github.com/nvm-sh/nvm)) + global **npm** packages
 - <img src="https://cdn.svgporn.com/logos/php.svg" height="14"> **PHP** +  <img src="https://cdn.svgporn.com/logos/composer.svg" height="14"> **Composer** + global packages
 - <img src="https://cdn.svgporn.com/logos/python.svg" height="14"> **Python** + **PIP** + global packages
@@ -38,7 +39,7 @@ The following will be installed and configured for you:
 - **TBD**: ~~<img src="https://cdn.svgporn.com/logos/kubernetes.svg" height="14"> **Kubernetes** + Minikube~~
 - <img src="https://cdn.svgporn.com/logos/postman.svg" height="14"> **Postman**
 
-- <img src="https://cdn.svgporn.com/logos/bash-icon.svg" height="14" /> **zsh** + [antigen](https://github.com/zsh-users/antigen)
+
 - And so much more (see [`config.yml`](config.yml))...
 
 ## Prerequisites
@@ -58,12 +59,8 @@ sudo dnf install git ansible
 ## 🐧 Distro compatibility
 
 <p>
-  <img alt="Fedora" src="https://img.shields.io/badge/Fedora-37-green.svg?style=for-the-badge" /><br/>
+  <img alt="Fedora" src="https://img.shields.io/badge/Fedora-38-green.svg?style=for-the-badge" /><br/>
 </p>
-
-### <img src="https://cdn.svgporn.com/logos/debian.svg" height="16" /> What about Debian-based distros like <img src="https://cdn.svgporn.com/logos/ubuntu.svg" height="16" /> Ubuntu?
-
-Check out the **[<img src="https://cdn.svgporn.com/logos/ubuntu.svg" height="12" /> Ubuntu Environment](https://github.com/alexander-danilenko/ubuntu-environment)** project.
 
 ## Author
 
