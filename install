@@ -9,4 +9,4 @@ export ANSIBLE_NOCOWS=1
 mkdir -p vendor/roles
 ansible-galaxy install -r requirements.yml --roles-path vendor/roles
 
-ansible-playbook playbook.yml --ask-become-pass "$@"
+ansible-playbook playbook.yml --diff --ask-become-pass "$@"
