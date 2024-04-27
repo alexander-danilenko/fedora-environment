@@ -126,7 +126,7 @@ apps:
 
   ### Flatpak's apps (using flathub.org repo)
   flatpak:
-    - app.resp.RESP # Redis GUI client
+    - com.redis.RedisInsight # Redis GUI client
     #- com.discordapp.Discord
     #- com.getpostman.Postman # API debugging tool
     #- com.slack.Slack
