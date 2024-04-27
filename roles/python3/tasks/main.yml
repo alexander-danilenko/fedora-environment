@@ -11,6 +11,6 @@
 
 - name: 'Install Python pip3 global packages'
   when: python3_pip3_global_packages|length > 0
-  shell: 'pip3 install --user {{ python3_pip3_global_packages | join(" ") }}'
+  shell: 'pip3 install {{ python3_pip3_global_packages | join(" ") }}'
   args:
     executable: '/bin/bash'
