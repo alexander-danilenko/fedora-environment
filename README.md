@@ -27,17 +27,17 @@ Setting up a new developer's machine can be an ad-hoc, manual, and time-consumin
 
 The following will be installed and configured for you:
 
-- <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Fish-shell-logo-ascii.svg" height="14" /> **fish** shell + [oh-my-fish](https://github.com/oh-my-fish/oh-my-fish)
-- <img src="https://cdn.svgporn.com/logos/nodejs-icon.svg" height="14"> **Node.JS** (via [node version manager](https://github.com/nvm-sh/nvm)) + global **npm** packages
-- <img src="https://cdn.svgporn.com/logos/php.svg" height="14"> **PHP** +  <img src="https://cdn.svgporn.com/logos/composer.svg" height="14"> **Composer** + global packages
-- <img src="https://cdn.svgporn.com/logos/python.svg" height="14"> **Python** + **PIP** + global packages
-- <img src="https://cdn.svgporn.com/logos/visual-studio-code.svg" height="14"> **Visual Studio Code** + extensions and themes
-- <img src="https://cdn.svgporn.com/logos/jetbrains.svg" height="14"> **JetBrains Toolbox**
-- <img src="https://cdn.svgporn.com/logos/docker-icon.svg" height="14"> **Docker** + <img src="https://d33wubrfki0l68.cloudfront.net/96d4dedb7aa3fbf371d01d3356a97ec463b23e04/ca713/images/docksal-mark-color.svg" height="14"> [**Docksal**](https://docksal.io/)
-- <img src="https://cdn.svgporn.com/logos/aws.svg" height="14"> **AWS CLI**
-- <img src="https://cdn.svgporn.com/logos/google-cloud.svg" height="14"> **Google Cloud CLI**
+- <img src="https://upload.wikimedia.org/wikipedia/commons/d/d8/Fish-shell-logo-ascii.svg" height="14" /> **[fish](https://fishshell.com/)** shell + [oh-my-fish](https://github.com/oh-my-fish/oh-my-fish)
+- <img src="https://cdn.svgporn.com/logos/nodejs-icon.svg" height="14"> **[Node.JS](https://nodejs.org)** (via [node version manager](https://github.com/nvm-sh/nvm)) + global **npm** packages
+- <img src="https://cdn.svgporn.com/logos/php.svg" height="14"> **[PHP](https://www.php.net/)** + <img src="https://cdn.svgporn.com/logos/composer.svg" height="14"> **[Composer](https://getcomposer.org/)** + global packages
+- <img src="https://cdn.svgporn.com/logos/python.svg" height="14"> **[Python](https://www.python.org/)** + **[PIP](https://pypi.org/)** + global packages
+- <img src="https://cdn.svgporn.com/logos/visual-studio-code.svg" height="14"> **[Visual Studio Code](https://code.visualstudio.com/)** + extensions and themes
+- <img src="https://cdn.svgporn.com/logos/jetbrains.svg" height="14"> **[JetBrains Toolbox](https://www.jetbrains.com/toolbox-app/)**
+- <img src="https://cdn.svgporn.com/logos/docker-icon.svg" height="14"> **[Docker](https://www.docker.com)** + <img src="https://d33wubrfki0l68.cloudfront.net/96d4dedb7aa3fbf371d01d3356a97ec463b23e04/ca713/images/docksal-mark-color.svg" height="14"> [**Docksal**](https://docksal.io/)
+- <img src="https://cdn.svgporn.com/logos/aws.svg" height="14"> **[AWS CLI](https://aws.amazon.com/cli/)**
+- <img src="https://cdn.svgporn.com/logos/google-cloud.svg" height="14"> **[Google Cloud CLI](https://cloud.google.com/sdk)**
 - <img src="https://www.vectorlogo.zone/logos/opentofu/opentofu-icon.svg" height="14"> **[OpenTofu](https://opentofu.org)** and <img src="https://cdn.svgporn.com/logos/terraform-icon.svg" height="14"> **[Terraform](https://terraform.io)**
-- <img src="https://cdn.svgporn.com/logos/postman.svg" height="14"> **Postman**
+- <img src="https://cdn.svgporn.com/logos/postman.svg" height="14"> **[Postman](https://www.postman.com/)**
 - And so much more (see [`config.yml`](config.yml))...
 
 ## Prerequisites
