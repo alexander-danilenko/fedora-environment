@@ -20,6 +20,9 @@ roles:
   - name: node
     src: https://github.com/alexander-danilenko/ansible-role-node
 
+  - name: opentofu
+    src: https://github.com/alexander-danilenko/ansible-role-fedora-opentofu
+
   - name: php-composer
     src: https://github.com/alexander-danilenko/ansible-role-php-composer
 

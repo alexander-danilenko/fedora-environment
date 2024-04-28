@@ -71,6 +71,10 @@ cloud:
     components:
       - 'google-cloud-cli'
 
+  # OpenTofu - Terraform open-source alternative.
+  opentofu:
+    install: true
+
 #### Docker things. ############################################################
 # Docker Community Edition
 docker:

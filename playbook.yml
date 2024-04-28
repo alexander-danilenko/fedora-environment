@@ -99,3 +99,8 @@
       vars:
         google_cloud_packages: '{{ cloud.google_cloud.components }}'
       tags: [cloud, gcloud]
+
+    - role: vendor/roles/opentofu
+      become: true
+      when: cloud.opentofu.install|bool and not ansible_check_mode
+      tags: [cloud, opentofu, tofu]
