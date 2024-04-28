@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo.svg" width="33%"/>
+  <img alt="Repository logo" src="./logo.png" width="60%" />
 </p>
 
 <h1 align="center"><img src="https://cdn.svgporn.com/logos/fedora.svg" height="22" /> <strong>Fedora</strong> Environment for DevOps/WebDev</h1>
