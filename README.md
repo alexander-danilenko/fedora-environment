@@ -40,10 +40,10 @@ The following will be installed and configured for you:
 
 ## Prerequisites
 
-Git and Ansible needs to be installed before running the install script.
+`ansible`, `git` and `rsync` needs to be installed before running the install script:
 
 ```
-sudo dnf install git ansible
+sudo dnf install git ansible rsync
 ```
 
 ## Install
@@ -51,6 +51,12 @@ sudo dnf install git ansible
 ```sh
 ./install
 ```
+
+## Local testing
+
+Testing is automated using script that runs playbook against [Fedora Docker images](https://hub.docker.com/_/fedora).
+
+See [test](./test) directory for more details.
 
 ## Show your support
 

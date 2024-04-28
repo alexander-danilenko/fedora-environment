@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-# Dry-run the installation process with extra verbosity.
-./install --check --diff -vv "$@"

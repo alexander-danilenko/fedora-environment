@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Exit on error
+set -e
+
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+
+version_to_test=$1
+imageTag="fedora-environment:$version_to_test"
+if [ -z "$version_to_test" ]; then
+  echo "Usage: $0 <fedora_version>"
+  exit 1
+fi
+
+cd $script_dir/..
+echo "[fedora-environment:test][fedora:$version_to_test] Building container"
+docker build --build-arg="FEDORA_VERSION=${version_to_test}" -t $imageTag -f test/Dockerfile .
+echo "[fedora-environment:test][fedora:$version_to_test] Running tests"
+docker run --rm $imageTag
+echo "[fedora-environment:test][fedora:$version_to_test] Removing image $imageTag"
+docker rmi $imageTag
+echo "[fedora-environment:test][fedora:$version_to_test] Testing complete"

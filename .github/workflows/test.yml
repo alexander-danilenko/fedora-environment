@@ -33,4 +33,4 @@ jobs:
         run: |
           dnf install -y ansible curl git-all rsync flatpak
           cd /work
-          ./test
+          ./install --check --diff -vv
