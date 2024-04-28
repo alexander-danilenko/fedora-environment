@@ -64,6 +64,13 @@ cloud:
   aws_cli:
     install: true
 
+  # Google Cloud SDK
+  google_cloud:
+    install: true
+    # Components to install. See https://cloud.google.com/sdk/docs/install#rpm
+    components:
+      - 'google-cloud-cli'
+
 #### Docker things. ############################################################
 # Docker Community Edition
 docker:

@@ -75,11 +75,6 @@
             visual_studio_code_extensions: '{{ apps.visual_studio_code.extensions }}'
       tags: [editor, microsoft, code, vscode, visual-studio-code]
 
-    #### Cloud tools and utils. ################################################
-    - role: vendor/roles/aws-cli
-      when: cloud.aws_cli.install|bool and not ansible_check_mode
-      tags: [cloud, aws, aws-cli]
-
     #### Docker things. ########################################################
     - role: vendor/roles/docker
       when: docker.install|bool and not ansible_check_mode
@@ -92,3 +87,15 @@
       vars:
         docksal_global_config: '{{ docksal.config }}'
       tags: [docksal]
+
+    #### Cloud tools and utils. ################################################
+    - role: vendor/roles/aws-cli
+      when: cloud.aws_cli.install|bool and not ansible_check_mode
+      tags: [cloud, aws, aws-cli]
+
+    - role: vendor/roles/google_cloud_cli
+      become: true
+      when: cloud.google_cloud.install|bool and not ansible_check_mode
+      vars:
+        google_cloud_packages: '{{ cloud.google_cloud.components }}'
+      tags: [cloud, gcloud]
