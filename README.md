@@ -68,7 +68,7 @@ Give a ⭐️ if this project helped you!
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alexander-danilenko/fedora-environment/issues). 
 
-Experiencing any problems with your distribution? [Raise and issue](https://github.com/alexander-danilenko/fedora-environment/issues/new)!
+Experiencing any problems with your distribution? [Raise and issue](https://github.com/alexander-danilenko/fedora-environment/issues/new/choose)!
 
 
 ## 📝 License
