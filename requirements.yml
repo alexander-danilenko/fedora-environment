@@ -8,11 +8,11 @@ roles:
     src: haxorof.docker_ce
     #src: https://github.com/haxorof/ansible-role-docker-ce
 
-  - name: google_cloud_cli
-    src: https://github.com/alexander-danilenko/ansible-role-fedora-google-cloud-cli
-
   - name: docksal
     src: https://github.com/alexander-danilenko/ansible-role-docksal
+
+  - name: google_cloud_cli
+    src: https://github.com/alexander-danilenko/ansible-role-fedora-google-cloud-cli
 
   - name: jetbrains-toolbox
     src: webarchitect609.jet_brains_toolbox
