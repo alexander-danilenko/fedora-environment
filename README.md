@@ -7,7 +7,7 @@
 > This repo contains [Ansible](https://www.ansible.com/) playbook for fast and easy DevOps and Web Developer's Linux environment setup on [Fedora](https://getfedora.org/) and all its spins.
 
 <p align="center">
-  <a href=".github/workflows/test.yml">
+  <a href="https://github.com/alexander-danilenko/fedora-environment/actions/workflows/test.yml">
     <img src="https://github.com/alexander-danilenko/fedora-environment/actions/workflows/test.yml/badge.svg?branch=main" />
   </a>
 </p>
