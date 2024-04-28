@@ -29,6 +29,9 @@ roles:
   - name: rpmfusion
     src: https://github.com/robertdebock/ansible-role-rpmfusion
 
+  - name: terraform
+    src: https://github.com/alexander-danilenko/ansible-role-fedora-terraform
+
   - name: visual-studio-code
     src: gantsign.visual-studio-code
 

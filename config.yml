@@ -61,17 +61,26 @@ node:
 #### Cloud tools and utils. ####################################################
 cloud:
   # AWS CLI v2
+  # @see https://aws.amazon.com/cli/
   aws_cli:
     install: true
 
   # Google Cloud SDK
+  # @see https://cloud.google.com/sdk
   google_cloud:
     install: true
     # Components to install. See https://cloud.google.com/sdk/docs/install#rpm
     components:
       - 'google-cloud-cli'
 
+  # Infrastructure as code tool used to provision and manage cloud and
+  # on-premises resources declaratively.
+  # @see https://www.terraform.io/
+  terraform:
+    install: true # Please consider using OpenTofu instead if possible.
+
   # OpenTofu - Terraform open-source alternative.
+  # @see https://opentofu.org/
   opentofu:
     install: true
 

@@ -104,3 +104,8 @@
       become: true
       when: cloud.opentofu.install|bool and not ansible_check_mode
       tags: [cloud, opentofu, tofu]
+
+    - role: vendor/roles/terraform
+      become: true
+      when: cloud.terraform.install|bool and not ansible_check_mode
+      tags: [cloud, terraform, hashicorp]
