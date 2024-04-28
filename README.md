@@ -14,7 +14,7 @@
 
 ## TL;DR
 
-1. `sudo dnf install git ansible`
+1. `sudo dnf install ansible git rsync`
 2. Adjust [`config.yml`](config.yml) for your needs
 3. Run `./install` script
 4. Wait for the ansible to do the magic
@@ -43,7 +43,7 @@ The following will be installed and configured for you:
 `ansible`, `git` and `rsync` needs to be installed before running the install script:
 
 ```
-sudo dnf install git ansible rsync
+sudo dnf install ansible git rsync
 ```
 
 ## Install
