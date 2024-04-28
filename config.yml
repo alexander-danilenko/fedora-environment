@@ -146,8 +146,9 @@ apps:
   rpm_urls:
     1password: https://downloads.1password.com/linux/rpm/stable/x86_64/1password-latest.rpm
     google-chrome: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    #teamviewer: https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
     zoom: https://zoom.us/client/latest/zoom_x86_64.rpm
+    #anydesk: https://download.anydesk.com/linux/anydesk_6.3.2-1_x86_64.rpm
+    #teamviewer: https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
 
   # List of packages that needs to be installed.
   packages:
