@@ -46,6 +46,9 @@
     #### Apps install. #########################################################
     - role: vendor/roles/rpmfusion
       become: true
+      # Force to run the role even in the check mode for having all repositories enabled.
+      # Who skips the rpmfusion role anyway?
+      check_mode: false
       vars:
         rpmfusion_free: true
         rpmfusion_nonfree: true
