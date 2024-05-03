@@ -112,10 +112,10 @@ apps:
       - christian-kohler.path-intellisense   # File path autocomplete
       - dakara.transformer                   # Filter, Sort, Unique, Reverse, Align, CSV, Line Selection, Text Transformations and Macros
       - dotenv.dotenv-vscode                 # .env support
+      - eamodio.gitlens                      # gitkraken.com git client for vscode
       - editorconfig.editorconfig            # EditorConfig support
       - esbenp.prettier-vscode               # Prettier - Code formatter
       - golang.go                            # Golang support
-      - mhutchie.git-graph                   # Git graph
       - ms-azuretools.vscode-docker          # Docker support
       - ms-python.python                     # Python support
       - ms-vscode-remote.remote-ssh          # SSH support
