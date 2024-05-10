@@ -1,12 +1,12 @@
 fish:
   install: true
   set_default: true
-  theme: lambda
+  theme: bobthefish
   packages:
     - https://github.com/edc/bass
     - https://github.com/derekstavis/plugin-nvm
     - https://github.com/oh-my-fish/plugin-aws
-    - https://github.com/evanlucas/fish-kubectl-completions
+    - https://github.com/oh-my-fish/theme-bobthefish
 
 #### Languages and interpreters. ###############################################
 python3:
