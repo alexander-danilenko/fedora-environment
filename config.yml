@@ -139,6 +139,7 @@ apps:
 
   ### Flatpak's apps (using flathub.org repo)
   flatpak:
+    # @see Postman start issue fix: https://github.com/postmanlabs/postman-app-support/issues/11620#issuecomment-1807189496
     - com.getpostman.Postman # API debugging tool
     - com.redis.RedisInsight # Redis GUI client
     - com.slack.Slack # Slack messenger
