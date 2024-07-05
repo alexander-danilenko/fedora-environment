@@ -6,7 +6,6 @@ fish:
     - https://github.com/edc/bass
     - https://github.com/derekstavis/plugin-nvm
     - https://github.com/oh-my-fish/plugin-aws
-    - https://github.com/oh-my-fish/theme-bobthefish
 
 #### Languages and interpreters. ###############################################
 python3:
