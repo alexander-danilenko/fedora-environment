@@ -21,9 +21,9 @@ jobs:
       matrix:
         # List of Docker images to test against.
         container:
+          - 'fedora:42'
+          - 'fedora:41'
           - 'fedora:40'
-          - 'fedora:39'
-          - 'fedora:38'
 
     steps:
     - uses: actions/checkout@v3
