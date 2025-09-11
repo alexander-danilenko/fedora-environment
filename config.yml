@@ -173,7 +173,6 @@ apps:
     - htop         # Terminal system monitor
     - jq           # Takes JSON input and retrieves data by query
     - mc           # Two panel terminal file manager
-    - neofetch     # Shows Linux System Information with Distribution Logo
     - net-tools    # Base network tools
     #- openfortivpn # Corporate VPN open source alternative
     - stacer       # Cool CleanMyMac alternative
