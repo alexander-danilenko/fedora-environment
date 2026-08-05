@@ -179,6 +179,7 @@ apps:
     - tldr         # Displays simple help pages for command-line tools
     - traceroute   # Traces the route taken by packets over an IPv4/IPv6 network
     - tree         # Displays an indented directory tree, in color
+    - nvidia-container-toolkit # NVIDIA Container Toolkit
     ### Archive formats support
     - p7zip         # 7z and 7za file archivers with high compression ratio
     - p7zip-plugins # Additional plugins for p7zip
